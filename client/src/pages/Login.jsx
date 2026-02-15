@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Mail, Lock, ArrowRight, Sparkles, FolderOpen, MessageSquare, HelpCircle, Shield, CheckCircle, Eye, EyeOff } from 'lucide-react';
 import PageCTA from '../components/PageCTA';
-
-const API_BASE = import.meta.env.VITE_API_URL || import.meta.env.VITE_SERVER_URL || 'http://localhost:5000';
+import API_BASE, { isProductionWithoutApi, PRODUCTION_API_MESSAGE } from '../config/api';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -50,7 +49,9 @@ export default function Login() {
       }
       setClientMessage('Unknown account type. Please contact support.');
     } catch {
-      setClientMessage('Network error. Please try again.');
+      setClientMessage(
+        isProductionWithoutApi() ? PRODUCTION_API_MESSAGE : 'Network error. Please try again.'
+      );
     } finally {
       setLoading(false);
     }

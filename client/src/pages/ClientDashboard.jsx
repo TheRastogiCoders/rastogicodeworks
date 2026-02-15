@@ -16,8 +16,7 @@ import {
   Mail,
 } from 'lucide-react';
 import DashboardNavbar from '../components/DashboardNavbar';
-
-const API_BASE = import.meta.env.VITE_API_URL || import.meta.env.VITE_SERVER_URL || 'http://localhost:5000';
+import API_BASE from '../config/api';
 
 const navItems = [
   { id: 'overview', label: 'Overview', icon: LayoutDashboard },

@@ -79,11 +79,13 @@ Open **http://localhost:5173** in the browser to view the site.
 2. **Root directory:** `client`.
 3. **Build command:** `npm run build` (default for Vite).
 4. **Output directory:** `dist` (default for Vite).
-5. Set **Environment Variable:**
+5. **Required:** Set **Environment Variable** in Vercel (Project → Settings → Environment Variables):
 
    | Variable        | Value                          |
    |-----------------|--------------------------------|
-   | `VITE_API_URL`  | `https://your-api.onrender.com` (your Render URL, no trailing slash) |
+   | `VITE_API_URL`  | `https://your-api.onrender.com` (your Render backend URL, no trailing slash) |
+
+   If you skip this, login/contact/dashboard will show "Backend not configured" or "Network error" in production.
 
 6. Deploy. Your app will call the Render API; cookies work cross-origin (sameSite: none, secure).
 

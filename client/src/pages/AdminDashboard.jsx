@@ -23,6 +23,7 @@ import {
 } from 'lucide-react';
 import { downloadInvoicePdf } from '../utils/invoicePdf.js';
 import DashboardNavbar from '../components/DashboardNavbar';
+import API_BASE from '../config/api';
 
 const emptyItem = { description: '', quantity: 1, price: 0 };
 
@@ -33,8 +34,6 @@ function calculateInvoiceTotals(items) {
   );
   return { subtotal, total: subtotal };
 }
-
-const API_BASE = import.meta.env.VITE_API_URL || import.meta.env.VITE_SERVER_URL || 'http://localhost:5000';
 
 export default function AdminDashboard() {
   const [activeSection, setActiveSection] = useState('overview'); // overview | invoices | clients | settings

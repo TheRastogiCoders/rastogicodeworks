@@ -3,7 +3,7 @@ import { Mail, Phone, MapPin, Clock, Send, MessageCircle, Linkedin, CheckCircle,
 import PageCTA from '../components/PageCTA';
 import SEO from '../components/SEO';
 
-const API_BASE = import.meta.env.VITE_API_URL || import.meta.env.VITE_SERVER_URL || 'http://localhost:5000';
+import API_BASE from '../config/api';
 
 const emailSubject = 'Enquiry from your website';
 const emailBody = `Hey,
