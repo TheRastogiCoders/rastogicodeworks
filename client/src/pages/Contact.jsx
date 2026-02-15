@@ -91,7 +91,7 @@ export default function Contact() {
 
   return (
     <div className="overflow-x-hidden bg-white selection:bg-primary-100 selection:text-primary-900 font-sans">
-      {/* Hero — inviting, connection-focused */}
+      {/* Hero  -  inviting, connection-focused */}
       <section className="relative pt-32 pb-20 md:pt-48 md:pb-28 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-slate-50 via-white to-slate-50" />
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary-100/40 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
@@ -114,18 +114,18 @@ export default function Contact() {
         </div>
       </section>
 
-      {/* Main content — contact options + form */}
+      {/* Main content  -  contact options + form */}
       <section className="py-20 md:py-28 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-            {/* Left — why connect + contact options */}
+            {/* Left  -  why connect + contact options */}
             <div className="lg:col-span-5">
               <p className="text-sm font-semibold text-primary-600 uppercase tracking-widest mb-4">We&apos;re here to help</p>
               <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight mb-6 leading-tight">
                 Start a conversation
               </h2>
               <p className="text-slate-600 text-lg leading-relaxed mb-10">
-                Whether you need a new website, API, or full-stack application—we&apos;re here to help. Share your requirements and we&apos;ll respond with next steps.
+                Whether you need a new website, API, or full-stack application - we&apos;re here to help. Share your requirements and we&apos;ll respond with next steps.
               </p>
 
               {/* Contact cards */}
@@ -169,7 +169,7 @@ export default function Contact() {
               </div>
             </div>
 
-            {/* Right — form */}
+            {/* Right  -  form */}
             <div id="contact-form" className="lg:col-span-7 scroll-mt-24">
               <div className="rounded-3xl border border-slate-200 bg-white shadow-xl shadow-slate-200/30 p-8 md:p-10 lg:p-12">
                 <h3 className="text-2xl font-bold text-slate-900 tracking-tight mb-2">Send us a message</h3>
@@ -272,7 +272,7 @@ export default function Contact() {
 
       <PageCTA
         title="Ready to start your project?"
-        subtitle="Use the form above or reach out directly—we typically reply within 24–48 hours."
+        subtitle="Use the form above or reach out directly - we typically reply within 24–48 hours."
         buttonText="Back to form"
         to="#contact-form"
       />

@@ -87,8 +87,8 @@ export async function generateInvoicePdf({
   doc.setFont(undefined, 'normal');
   doc.setTextColor(71, 85, 105);
   doc.text(`Invoice No.  #${invoiceId}`, pageW - margin, headerY + 14, { align: 'right' });
-  doc.text('Issued  ' + (invoiceDate ? new Date(invoiceDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : '—'), pageW - margin, headerY + 20, { align: 'right' });
-  doc.text('Due  ' + (dueDate ? new Date(dueDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : '—'), pageW - margin, headerY + 26, { align: 'right' });
+  doc.text('Issued  ' + (invoiceDate ? new Date(invoiceDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : '-'), pageW - margin, headerY + 20, { align: 'right' });
+  doc.text('Due  ' + (dueDate ? new Date(dueDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : '-'), pageW - margin, headerY + 26, { align: 'right' });
 
   y = headerY + 32;
 
@@ -172,7 +172,7 @@ export async function generateInvoicePdf({
       doc.setDrawColor(241, 245, 249);
       doc.line(margin, y, pageW - margin, y);
       doc.setFontSize(9);
-      doc.text((item.description || '—').substring(0, 48), colDesc + 3, y + 5.5);
+      doc.text((item.description || '-').substring(0, 48), colDesc + 3, y + 5.5);
       doc.text(String(qty), colQty + 4, y + 5.5);
       doc.text(`${CURRENCY} ${price.toFixed(2)}`, colPrice + 2, y + 5.5);
       doc.text(`${CURRENCY} ${amount.toFixed(2)}`, colAmount - 2, y + 5.5, { align: 'right' });

@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 
 /**
- * Reusable CTA section — same design on all pages, content via props.
+ * Reusable CTA section  -  same design on all pages, content via props.
  * Green gradient container, white text, white pill button.
  */
 export default function PageCTA({ badge, title, subtitle, buttonText = 'Get in touch', to = '/contact' }) {

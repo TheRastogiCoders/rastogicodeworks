@@ -15,7 +15,7 @@ const clientLogos = [
   'Rhine Advisory'
 ];
 
-/** Featured work — same design as Home "Selected Work" (image cards with hover overlay) */
+/** Featured work  -  same design as Home "Selected Work" (image cards with hover overlay) */
 const featuredWork = [
   {
     clientName: 'Nb Aurum Solutions',
@@ -23,7 +23,7 @@ const featuredWork = [
     url: 'https://nbaurum.com',
     domain: 'nbaurum.com',
     image: '/image.png',
-    alt: 'Professional Finance Dashboard For Startup — Nb Aurum Solutions'
+    alt: 'Professional Finance Dashboard For Startup  -  Nb Aurum Solutions'
   },
   {
     clientName: 'YD Advisory',
@@ -31,7 +31,7 @@ const featuredWork = [
     url: 'https://ydadvisory.ae',
     domain: 'ydadvisory.ae',
     image: '/image2.png',
-    alt: 'Revamped Website For Established Finance MNC — YD Advisory'
+    alt: 'Revamped Website For Established Finance MNC  -  YD Advisory'
   },
   {
     clientName: 'Rastogi & Associates',
@@ -39,7 +39,7 @@ const featuredWork = [
     url: 'https://rastogiassociates.com/',
     domain: 'rastogiassociates.com',
     image: '/image3.png',
-    alt: 'Professional Website For Established Taxation and Law Firm — Rastogi & Associates'
+    alt: 'Professional Website For Established Taxation and Law Firm  -  Rastogi & Associates'
   },
   {
     clientName: 'Dhoondh',
@@ -47,7 +47,7 @@ const featuredWork = [
     url: 'https://dhoondh.in',
     domain: 'dhoondh.in',
     image: '/image4.png',
-    alt: 'Job Portal For Established Companies and New Industry Professional Leaders — Dhoondh'
+    alt: 'Job Portal For Established Companies and New Industry Professional Leaders  -  Dhoondh'
   },
   {
     clientName: 'thenote.earth',
@@ -55,7 +55,7 @@ const featuredWork = [
     url: 'https://thenote.earth',
     domain: 'thenote.earth',
     image: '/note.png',
-    alt: 'World\'s First Zero Plastic Pen — thenote.earth'
+    alt: 'World\'s First Zero Plastic Pen  -  thenote.earth'
   },
   {
     clientName: 'ONX STUDIO',
@@ -63,7 +63,7 @@ const featuredWork = [
     url: 'https://onxstudio.com',
     domain: 'onxstudio.com',
     image: '/onx.png',
-    alt: 'ONX STUDIO — Creative Studio and Brand Experience'
+    alt: 'ONX STUDIO  -  Creative Studio and Brand Experience'
   }
 ];
 
@@ -83,7 +83,7 @@ const stats = [
 export default function Clients() {
   return (
     <div className="overflow-x-hidden bg-white selection:bg-primary-100 selection:text-primary-900 font-sans">
-      {/* Hero — refined, editorial */}
+      {/* Hero  -  refined, editorial */}
       <section className="relative min-h-[85vh] flex items-center pt-28 pb-20 md:pt-40 md:pb-28 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-slate-50 via-white to-slate-50" />
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary-100/40 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
@@ -121,7 +121,7 @@ export default function Clients() {
         </div>
       </section>
 
-      {/* Stats — glass bar */}
+      {/* Stats  -  glass bar */}
       <section className="relative -mt-8 z-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <div className="rounded-2xl bg-white/90 backdrop-blur-xl border border-slate-200/60 shadow-xl shadow-slate-200/50 p-8 md:p-10">
@@ -150,7 +150,7 @@ export default function Clients() {
               From early-stage startups to established brands
             </h2>
             <p className="text-slate-600 text-lg leading-relaxed">
-              Our clients care about quality, reliability, and a team that thinks with them—not just codes for them.
+              Our clients care about quality, reliability, and a team that thinks with them - not just codes for them.
             </p>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 md:gap-6">
@@ -166,7 +166,7 @@ export default function Clients() {
         </div>
       </section>
 
-      {/* Featured Projects — same design as Home "Selected Work" */}
+      {/* Featured Projects  -  same design as Home "Selected Work" */}
       <section id="projects" className="py-24 md:py-32 bg-primary-50/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-12">
@@ -247,7 +247,7 @@ export default function Clients() {
                     Planning your next release or need help stabilizing an existing product? We&apos;d love to hear what you&apos;re building.
                   </p>
                   <p className="text-sm text-primary-200 mb-10">
-                    Share your company, your users, and your goals—we&apos;ll respond with concrete next steps.
+                    Share your company, your users, and your goals - we&apos;ll respond with concrete next steps.
                   </p>
                   <Link
                     to="/contact"

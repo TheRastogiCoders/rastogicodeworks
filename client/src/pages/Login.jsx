@@ -58,7 +58,7 @@ export default function Login() {
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
-      {/* Full-page hero strip — sets the tone */}
+      {/* Full-page hero strip  -  sets the tone */}
       <section className="relative pt-28 pb-8 md:pt-36 md:pb-10 px-4 sm:px-6 lg:px-8 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-white to-primary-50/30" />
         <div className="absolute top-0 right-0 w-[min(80vw,600px)] h-[min(80vw,600px)] bg-primary-100/40 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
@@ -88,7 +88,7 @@ export default function Login() {
         </div>
       </section>
 
-      {/* Main content — form + value props, full width */}
+      {/* Main content  -  form + value props, full width */}
       <section className="relative flex-1 py-4 md:py-6 px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-10 items-start">
@@ -234,11 +234,11 @@ export default function Login() {
         </div>
       </section>
 
-      {/* Bottom CTA — full page closure */}
+      {/* Bottom CTA  -  full page closure */}
       <PageCTA
         badge="Need help?"
         title="We’re here for you"
-        subtitle="Questions about access, projects, or anything else—reach out anytime."
+        subtitle="Questions about access, projects, or anything else - reach out anytime."
         buttonText="Contact us"
         to="/contact"
       />

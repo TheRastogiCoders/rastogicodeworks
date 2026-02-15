@@ -153,7 +153,7 @@
     linear-gradient(to bottom, rgba(22, 163, 74, 0.05) 1px, transparent 1px);
 }
 
-/* Admin Dashboard — matches website theme (primary green, Plus Jakarta, Cormorant brand) */
+/* Admin Dashboard  -  matches website theme (primary green, Plus Jakarta, Cormorant brand) */
 .admin-dashboard {
   --admin-bg: linear-gradient(160deg, #f0fdf4 0%, #ffffff 45%, #f8fafc 100%);
   --admin-card: rgba(255, 255, 255, 0.9);

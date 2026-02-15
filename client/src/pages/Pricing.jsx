@@ -28,7 +28,7 @@ export default function Pricing() {
         </div>
       </section>
 
-      {/* Pricing cards — one per service */}
+      {/* Pricing cards  -  one per service */}
       <section className="py-16 md:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
@@ -83,11 +83,11 @@ export default function Pricing() {
         </div>
       </section>
 
-      {/* Note — transparent pricing */}
+      {/* Note  -  transparent pricing */}
       <section className="py-16 md:py-20 bg-primary-50/40 border-y border-primary-100/60">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="text-slate-700 text-lg leading-relaxed">
-            We don’t believe in one-size-fits-all pricing. Every project is different—we’ll scope your requirements and share a clear, fixed or time-based quote before you commit.
+            We don’t believe in one-size-fits-all pricing. Every project is different - we’ll scope your requirements and share a clear, fixed or time-based quote before you commit.
           </p>
         </div>
       </section>

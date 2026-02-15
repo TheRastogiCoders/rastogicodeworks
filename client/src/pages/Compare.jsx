@@ -1,3 +1,4 @@
+import { useRef, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ArrowRight,
@@ -36,18 +37,18 @@ const comparisonRows = [
   },
   {
     label: 'Handover & ownership',
-    rastogi: 'Clean documentation, readable code, and full handover—you’re never locked in.',
+    rastogi: 'Clean documentation, readable code, and full handover - you’re never locked in.',
     others: 'Vendor lock-in, opaque codebases, or costly transitions.',
   },
   {
     label: 'Partnership approach',
-    rastogi: 'We work for the long term—ongoing support, iterations, and a mindset that your product evolves with you.',
-    others: 'Short-term projects, one-off deliveries, or handoff-and-forget—no ongoing partnership.',
+    rastogi: 'We work for the long term - ongoing support, iterations, and a mindset that your product evolves with you.',
+    others: 'Short-term projects, one-off deliveries, or handoff-and-forget - no ongoing partnership.',
   },
   {
     label: 'E-commerce & platforms (e.g. Shopify)',
-    rastogi: 'We only do custom—Shopify when it fits your use case, or bespoke builds when you need full control. Our mindset is tailored to each client.',
-    others: 'One-size-fits-all setups, generic templates, or off-the-shelf solutions—not built around your specific needs.',
+    rastogi: 'We only do custom - Shopify when it fits your use case, or bespoke builds when you need full control. Our mindset is tailored to each client.',
+    others: 'One-size-fits-all setups, generic templates, or off-the-shelf solutions - not built around your specific needs.',
   },
 ];
 
@@ -60,7 +61,7 @@ const whyChooseUs = [
   {
     icon: <Shield className="w-6 h-6" />,
     title: 'No lock-in mindset',
-    desc: 'We document architecture, write readable code, and hand over cleanly—so you’re never stuck with one vendor.',
+    desc: 'We document architecture, write readable code, and hand over cleanly - so you’re never stuck with one vendor.',
   },
   {
     icon: <Clock className="w-6 h-6" />,
@@ -81,7 +82,89 @@ const whatYouCanDependOn = [
   { label: 'Clear documentation', icon: <FileText className="w-5 h-5" /> },
 ];
 
+const AUTO_SCROLL_DURATION_MS = 9000;
+const AUTO_SCROLL_PAUSE_MS = 2000;
+const MANUAL_SCROLL_PAUSE_MS = 6000;
+
+// Smooth ease-in-out cubic for buttery auto-scroll
+function easeInOutCubic(t) {
+  return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+}
+
 export default function Compare() {
+  const tableScrollRef = useRef(null);
+  const [isTableInView, setIsTableInView] = useState(false);
+  const pauseUntilRef = useRef(0);
+
+  useEffect(() => {
+    const el = tableScrollRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => setIsTableInView(entry.isIntersecting));
+      },
+      { threshold: 0.2, rootMargin: '0px' },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const el = tableScrollRef.current;
+    if (!el || !isTableInView) return;
+
+    const media = window.matchMedia('(max-width: 767px)');
+    if (!media.matches) return;
+
+    let animationId = null;
+    let startTime = null;
+    let fromScroll = 0;
+    let toScroll = Math.max(0, el.scrollWidth - el.clientWidth);
+
+    function run(timestamp) {
+      const now = Date.now();
+      if (now < pauseUntilRef.current) {
+        animationId = requestAnimationFrame(run);
+        return;
+      }
+      const maxScroll = el.scrollWidth - el.clientWidth;
+      if (maxScroll <= 0) {
+        animationId = requestAnimationFrame(run);
+        return;
+      }
+      if (startTime === null) startTime = timestamp;
+      const elapsed = timestamp - startTime;
+      const duration = AUTO_SCROLL_DURATION_MS;
+      const progress = Math.min(elapsed / duration, 1);
+      const smoothProgress = easeInOutCubic(progress);
+      el.scrollLeft = fromScroll + (toScroll - fromScroll) * smoothProgress;
+
+      if (progress >= 1) {
+        startTime = null;
+        const nextFrom = toScroll;
+        const nextTo = toScroll === maxScroll ? 0 : maxScroll;
+        fromScroll = nextFrom;
+        toScroll = nextTo;
+        setTimeout(() => {
+          animationId = requestAnimationFrame(run);
+        }, AUTO_SCROLL_PAUSE_MS);
+        return;
+      }
+      animationId = requestAnimationFrame(run);
+    }
+
+    if (toScroll > 0) animationId = requestAnimationFrame(run);
+
+    return () => {
+      if (animationId) cancelAnimationFrame(animationId);
+    };
+  }, [isTableInView]);
+
+  const handleTableUserInteraction = () => {
+    pauseUntilRef.current = Date.now() + MANUAL_SCROLL_PAUSE_MS;
+  };
+
   return (
     <div className="overflow-x-hidden bg-white selection:bg-primary-100 selection:text-primary-900 font-sans">
       {/* Hero */}
@@ -101,7 +184,7 @@ export default function Compare() {
             </span>
           </h1>
           <p className="text-xl md:text-2xl text-slate-600 max-w-2xl mx-auto leading-relaxed mb-12 font-medium">
-            Picking a development partner is a big decision. Here’s how our way of working compares to typical alternatives—so you can decide with clarity.
+            Picking a development partner is a big decision. Here’s how our way of working compares to typical alternatives - so you can decide with clarity.
           </p>
           <Link
             to="/contact"
@@ -113,7 +196,7 @@ export default function Compare() {
         </div>
       </section>
 
-      {/* Understanding the comparison — client understanding */}
+      {/* Understanding the comparison  -  client understanding */}
       <section className="py-20 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center mb-16">
@@ -126,35 +209,50 @@ export default function Compare() {
             </p>
           </div>
 
-          <div className="rounded-3xl border border-slate-200 bg-white shadow-xl shadow-slate-200/30 overflow-hidden">
-            <div className="grid grid-cols-1 md:grid-cols-3 bg-slate-50 border-b border-slate-200">
-              <div className="px-6 py-5 font-semibold text-slate-900">What matters</div>
-              <div className="px-6 py-5 bg-primary-50/80 border-l border-slate-200 font-brand font-semibold italic text-primary-800 flex items-center gap-2">
-                <CheckCircle className="w-5 h-5 text-primary-600" />
-                Rastogi Codeworks
+          {/* Table: same tabular layout on all devices; horizontal scroll + auto-scroll on mobile when in view */}
+          <div
+            ref={tableScrollRef}
+            className="overflow-x-auto overflow-y-hidden -mx-4 sm:mx-0 px-4 sm:px-0 rounded-3xl border border-slate-200 bg-white shadow-xl shadow-slate-200/30 scroll-smooth touch-pan-x overscroll-x-contain"
+            style={{ WebkitOverflowScrolling: 'touch' }}
+            onTouchStart={handleTableUserInteraction}
+            onTouchMove={handleTableUserInteraction}
+            onWheel={handleTableUserInteraction}
+          >
+            <div className="min-w-[600px]">
+              <div className="grid grid-cols-3 bg-slate-50 border-b border-slate-200">
+                <div className="px-4 py-4 sm:px-6 sm:py-5 font-semibold text-slate-900 text-sm sm:text-base">What matters</div>
+                <div className="px-4 py-4 sm:px-6 sm:py-5 bg-primary-50/80 border-l border-slate-200 font-brand font-semibold italic text-primary-800 flex items-center gap-2 text-sm sm:text-base">
+                  <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-primary-600 shrink-0" />
+                  Rastogi Codeworks
+                </div>
+                <div className="px-4 py-4 sm:px-6 sm:py-5 border-l border-slate-200 font-semibold text-slate-500 flex items-center gap-2 text-sm sm:text-base">
+                  <XCircle className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400 shrink-0" />
+                  Typical alternative
+                </div>
               </div>
-              <div className="px-6 py-5 border-l border-slate-200 font-semibold text-slate-500 flex items-center gap-2">
-                <XCircle className="w-5 h-5 text-slate-400" />
-                Typical alternative
-              </div>
+              {comparisonRows.map((row, i) => (
+                <div
+                  key={row.label}
+                  className={`grid grid-cols-3 border-b border-slate-100 last:border-b-0 hover:bg-slate-50/50 transition-colors ${
+                    i % 2 === 0 ? 'bg-white' : 'bg-slate-50/30'
+                  }`}
+                >
+                  <div className="px-4 py-4 sm:px-6 sm:py-5 font-medium text-slate-900 border-r border-slate-100 text-sm sm:text-base">
+                    {row.label}
+                  </div>
+                  <div className="px-4 py-4 sm:px-6 sm:py-5 bg-primary-50/30 md:bg-primary-50/20 border-r border-slate-100 text-slate-700 leading-relaxed text-sm sm:text-base">
+                    {row.rastogi}
+                  </div>
+                  <div className="px-4 py-4 sm:px-6 sm:py-5 text-slate-500 leading-relaxed text-sm sm:text-base">
+                    {row.others}
+                  </div>
+                </div>
+              ))}
             </div>
-            {comparisonRows.map((row, i) => (
-              <div
-                key={row.label}
-                className={`grid grid-cols-1 md:grid-cols-3 border-b border-slate-100 last:border-b-0 hover:bg-slate-50/50 transition-colors ${
-                  i % 2 === 0 ? 'bg-white' : 'bg-slate-50/30'
-                }`}
-              >
-                <div className="px-6 py-5 font-medium text-slate-900 border-b md:border-b-0 md:border-r border-slate-100">
-                  {row.label}
-                </div>
-                <div className="px-6 py-5 bg-primary-50/30 md:bg-primary-50/20 border-b md:border-b-0 md:border-r border-slate-100 text-slate-700 leading-relaxed">
-                  {row.rastogi}
-                </div>
-                <div className="px-6 py-5 text-slate-500 leading-relaxed">{row.others}</div>
-              </div>
-            ))}
           </div>
+          <p className="md:hidden text-center text-sm text-slate-500 mt-3 px-4">
+            Swipe to explore • Auto-scrolls when idle
+          </p>
         </div>
       </section>
 

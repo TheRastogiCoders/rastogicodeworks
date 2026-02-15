@@ -35,7 +35,7 @@ export default function About() {
               <div className="absolute inset-0 bg-gradient-to-br from-primary-500 to-primary-600 rounded-[2rem] rotate-3 group-hover:rotate-2 transition-transform duration-500 opacity-20 blur-sm" />
               <img 
                 src="/about.png" 
-                alt="Rastogi Codeworks team collaborating—Founded 2025, delivering excellence in software engineering" 
+                alt="Rastogi Codeworks team collaborating - Founded 2025, delivering excellence in software engineering" 
                 className="relative rounded-[2rem] shadow-2xl w-full object-cover aspect-[4/3] transform transition-transform duration-500 group-hover:scale-[1.01]"
               />
             </div>
@@ -47,10 +47,10 @@ export default function About() {
               </h2>
               <div className="space-y-6 text-lg text-slate-600 leading-relaxed">
                 <p>
-                  Rastogi Codeworks builds custom software and digital solutions that scale with your business. From web and mobile apps to cloud infrastructure and automation, we turn complex requirements into clear, reliable products—so you ship faster and your users get experiences that convert.
+                  Rastogi Codeworks builds custom software and digital solutions that scale with your business. From web and mobile apps to cloud infrastructure and automation, we turn complex requirements into clear, reliable products - so you ship faster and your users get experiences that convert.
                 </p>
                 <p>
-                  We work as an extension of your team: we align on your goals, your users, and your timelines. That partnership—backed by modern tech, security best practices, and transparent communication—is how we deliver software that performs in the real world and supports long-term growth.
+                  We work as an extension of your team: we align on your goals, your users, and your timelines. That partnership - backed by modern tech, security best practices, and transparent communication - is how we deliver software that performs in the real world and supports long-term growth.
                 </p>
               </div>
               
@@ -132,7 +132,7 @@ export default function About() {
                 <span className="text-primary-600">Continuous Growth.</span>
               </h2>
               <p className="text-lg text-slate-600 leading-relaxed">
-                Our team combines deep expertise in software development with a commitment to staying ahead of the curve. We invest in people and practices that deliver better outcomes for your projects—from modern frameworks and security standards to clear processes and on-time delivery.
+                Our team combines deep expertise in software development with a commitment to staying ahead of the curve. We invest in people and practices that deliver better outcomes for your projects - from modern frameworks and security standards to clear processes and on-time delivery.
               </p>
               <ul className="space-y-4">
                 {[
@@ -152,7 +152,7 @@ export default function About() {
               <div className="absolute -inset-4 bg-primary-100 rounded-[2rem] -rotate-2" />
               <img 
                 src="/coding.png" 
-                alt="Rastogi Codeworks—development and coding in action, modern software engineering workspace" 
+                alt="Rastogi Codeworks - development and coding in action, modern software engineering workspace" 
                 className="relative rounded-[2rem] shadow-xl w-full object-cover aspect-square rotate-2 hover:rotate-0 transition-transform duration-500 opacity-60 hover:opacity-85"
               />
             </div>
@@ -274,7 +274,7 @@ export default function About() {
             {[
               { 
                 title: 'Integrity', 
-                desc: 'We believe in transparency. No hidden costs, no technical jargon—just honest partnership.',
+                desc: 'We believe in transparency. No hidden costs, no technical jargon - just honest partnership.',
                 icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z'
               },
               { 

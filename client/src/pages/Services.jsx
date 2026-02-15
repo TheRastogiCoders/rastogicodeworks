@@ -9,12 +9,12 @@ import { services } from '../data/services';
 const reasons = [
   {
     title: "Senior Engineering Talent",
-    desc: "Our developers ship production-ready web and mobile apps using modern stacks—React, Node.js, Next.js, and cloud platforms. You get scalable, maintainable software built to last.",
+    desc: "Our developers ship production-ready web and mobile apps using modern stacks - React, Node.js, Next.js, and cloud platforms. You get scalable, maintainable software built to last.",
     icon: <Code className="w-6 h-6" />
   },
   {
     title: "Agile & Iterative Delivery",
-    desc: "We work in short sprints with clear milestones. You see progress every two weeks, give feedback early, and reduce risk—so we build exactly what your business needs.",
+    desc: "We work in short sprints with clear milestones. You see progress every two weeks, give feedback early, and reduce risk - so we build exactly what your business needs.",
     icon: <Zap className="w-6 h-6" />
   },
   {
@@ -243,7 +243,7 @@ export default function Services() {
         </div>
       </section>
 
-      {/* Why Partner With Us — modern & aesthetic */}
+      {/* Why Partner With Us  -  modern & aesthetic */}
       <section className="py-24 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-slate-50 via-white to-primary-50/30" />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary-200/20 rounded-full blur-3xl -translate-y-1/2 pointer-events-none" />
@@ -259,7 +259,7 @@ export default function Services() {
               </span>
             </h2>
             <p className="text-slate-600 max-w-2xl mx-auto text-lg">
-              From custom web and mobile apps to cloud and automation—we deliver on time, with clear communication and quality built in.
+              From custom web and mobile apps to cloud and automation - we deliver on time, with clear communication and quality built in.
             </p>
           </div>
 

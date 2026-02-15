@@ -21,7 +21,7 @@ export default function ServiceDetail() {
 
   return (
     <div className="min-h-screen bg-white selection:bg-primary-100 selection:text-primary-900">
-      {/* Hero — marketing-led, bold */}
+      {/* Hero  -  marketing-led, bold */}
       <section className="relative overflow-hidden bg-gradient-to-br from-primary-950 via-primary-900 to-primary-950 text-white">
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:64px_64px] opacity-50" />
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary-500/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
@@ -53,7 +53,7 @@ export default function ServiceDetail() {
         </div>
       </section>
 
-      {/* Value props — 3 marketing pillars */}
+      {/* Value props  -  3 marketing pillars */}
       <section className="relative z-20 pt-8 sm:pt-10 md:pt-12 pb-16 sm:pb-20 md:pb-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
@@ -77,7 +77,7 @@ export default function ServiceDetail() {
         </div>
       </section>
 
-      {/* Overview — full description */}
+      {/* Overview  -  full description */}
       <section className="py-20 md:py-28 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
@@ -96,7 +96,7 @@ export default function ServiceDetail() {
         </div>
       </section>
 
-      {/* Key Features — card grid */}
+      {/* Key Features  -  card grid */}
       <section className="py-20 md:py-28 bg-slate-50/80 border-y border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-14">
@@ -162,7 +162,7 @@ export default function ServiceDetail() {
         </div>
       </section>
 
-      {/* Process — timeline / steps */}
+      {/* Process  -  timeline / steps */}
       <section id="process" className="py-20 md:py-28 bg-slate-50/80 border-t border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-14">

@@ -527,7 +527,7 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 stagger-children">
-            {/* Project 1 — Nb Aurum Solutions */}
+            {/* Project 1  -  Nb Aurum Solutions */}
             <a
               href="https://nbaurum.com"
               target="_blank"
@@ -538,7 +538,7 @@ export default function Home() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
                 <img 
                   src="/image.png" 
-                  alt="Professional Finance Dashboard For Startup — Nb Aurum Solutions" 
+                  alt="Professional Finance Dashboard For Startup  -  Nb Aurum Solutions" 
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute bottom-0 left-0 p-8 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 z-20">
@@ -551,7 +551,7 @@ export default function Home() {
               </div>
             </a>
 
-            {/* Project 2 — YD Advisory */}
+            {/* Project 2  -  YD Advisory */}
             <a
               href="https://ydadvisory.ae"
               target="_blank"
@@ -562,7 +562,7 @@ export default function Home() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
                 <img 
                   src="/image2.png" 
-                  alt="Revamped Website For Established Finance MNC — YD Advisory" 
+                  alt="Revamped Website For Established Finance MNC  -  YD Advisory" 
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute bottom-0 left-0 p-8 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 z-20">
@@ -575,7 +575,7 @@ export default function Home() {
               </div>
             </a>
 
-            {/* Project 3 — Rastogi & Associates */}
+            {/* Project 3  -  Rastogi & Associates */}
             <a
               href="https://rastogiassociates.com/"
               target="_blank"
@@ -586,7 +586,7 @@ export default function Home() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
                 <img 
                   src="/image3.png" 
-                  alt="Professional Website For Established Taxation and Law Firm — Rastogi & Associates" 
+                  alt="Professional Website For Established Taxation and Law Firm  -  Rastogi & Associates" 
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute bottom-0 left-0 p-8 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 z-20">
@@ -599,7 +599,7 @@ export default function Home() {
               </div>
             </a>
 
-            {/* Project 4 — Dhoondh */}
+            {/* Project 4  -  Dhoondh */}
             <a
               href="https://dhoondh.in"
               target="_blank"
@@ -610,7 +610,7 @@ export default function Home() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
                 <img 
                   src="/image4.png" 
-                  alt="Job Portal For Established Companies and New Industry Professional Leaders — Dhoondh" 
+                  alt="Job Portal For Established Companies and New Industry Professional Leaders  -  Dhoondh" 
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute bottom-0 left-0 p-8 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 z-20">
@@ -640,7 +640,7 @@ export default function Home() {
                   <div className="absolute inset-0 bg-primary-600 rounded-2xl rotate-2 group-hover:rotate-1 transition-transform duration-500 opacity-20" />
                   <img 
                     src="/used.png" 
-                    alt="Rastogi Codeworks development team building software with velocity—custom web and app development" 
+                    alt="Rastogi Codeworks development team building software with velocity - custom web and app development" 
                     className="relative rounded-2xl shadow-xl w-full h-auto object-cover transform -rotate-2 group-hover:rotate-0 transition-transform duration-500"
                   />
                   {/* Floating Badge */}
@@ -667,7 +667,7 @@ export default function Home() {
                   <span className="text-primary-600">Scale Smarter.</span>
                 </h2>
                 <p className="text-lg text-slate-600 leading-relaxed">
-                  Custom software development that delivers. We combine proven processes with modern tech—AI, automation, and secure cloud infrastructure—so you get scalable applications and APIs without the guesswork.
+                  Custom software development that delivers. We combine proven processes with modern tech - AI, automation, and secure cloud infrastructure - so you get scalable applications and APIs without the guesswork.
                 </p>
                 <ul className="space-y-4 pt-4" role="list">
                   {[

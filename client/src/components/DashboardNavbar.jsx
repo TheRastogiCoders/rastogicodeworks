@@ -156,7 +156,7 @@ export default function DashboardNavbar({
           </button>
         </div>
 
-        {/* Mobile dropdown menu — inside nav so it positions below the bar */}
+        {/* Mobile dropdown menu  -  inside nav so it positions below the bar */}
         {open && (
           <div className="absolute top-full left-0 right-0 mt-2 mx-auto w-[calc(100%-0.5rem)] max-w-md max-h-[calc(100vh-8rem)] overflow-y-auto z-[110] bg-white border border-primary-200/80 rounded-2xl shadow-xl shadow-black/20 animate-fade-in-up origin-top lg:hidden">
           <div className="p-4 flex flex-col gap-1">

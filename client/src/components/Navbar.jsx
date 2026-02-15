@@ -35,11 +35,21 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  // Close mobile menu when viewport becomes desktop (lg) so it never shows alongside horizontal nav
+  useEffect(() => {
+    const media = window.matchMedia('(min-width: 1024px)');
+    const handler = () => {
+      if (media.matches) setOpen(false);
+    };
+    media.addEventListener('change', handler);
+    return () => media.removeEventListener('change', handler);
+  }, []);
+
   const darkMode = scrolled;
 
   return (
     <header className="fixed top-0 left-0 right-0 z-[100] flex justify-center pointer-events-none px-2 sm:px-4 pt-[max(12px,env(safe-area-inset-top))] sm:pt-[max(14px,env(safe-area-inset-top))] md:pt-4 lg:pt-6">
-      {/* Mobile menu backdrop — below nav so clicking outside closes menu */}
+      {/* Mobile menu backdrop  -  below nav so clicking outside closes menu */}
       {open && (
         <div
           className="fixed inset-0 z-0 lg:hidden bg-black/25 pointer-events-auto"
@@ -49,11 +59,11 @@ export default function Navbar() {
       )}
       <nav className={`relative z-10 pointer-events-auto backdrop-blur-xl rounded-full pl-3 pr-3 sm:pl-5 sm:pr-5 md:pl-8 md:pr-8 h-[72px] sm:h-[76px] md:h-[84px] lg:h-[96px] w-[95%] max-w-7xl min-w-0 transition-all duration-300 flex items-center justify-between gap-1 sm:gap-2 md:gap-4 ${open ? 'overflow-visible' : 'overflow-hidden'} ${
         darkMode 
-          ? 'bg-primary-900/95 border border-white/20 shadow-lg shadow-black/20' 
-          : 'bg-white/95 sm:bg-white/90 border border-primary-200/60 sm:border-white/40 shadow-lg shadow-black/10'
+          ? 'bg-primary-900/75 md:bg-primary-900/95 border border-white/20 shadow-lg shadow-black/20' 
+          : 'bg-white/80 sm:bg-white/90 border border-primary-200/60 sm:border-white/40 shadow-lg shadow-black/10'
       }`}>
         
-        {/* Left: Logo + Brand name — switch logo when navbar is dark (scrolled); click goes to home */}
+        {/* Left: Logo + Brand name  -  switch logo when navbar is dark (scrolled); click goes to home */}
         <Link to="/" aria-label="Go to home" className="flex items-center gap-2 md:gap-3 shrink-0 min-w-0 max-w-[60%] sm:max-w-none group">
           <img
             src={darkMode ? '/logo_transparent.png' : '/transparent_logo.png'}
@@ -67,7 +77,7 @@ export default function Navbar() {
           </span>
         </Link>
 
-        {/* Middle: Navigation Links — include Dashboard when client is logged in */}
+        {/* Middle: Navigation Links  -  include Dashboard when client is logged in */}
         <ul className="hidden lg:flex items-center gap-1 xl:gap-2 h-full flex-shrink min-w-0">
           {navLinks.map(({ to, label }) => (
             <li key={to} className="h-full flex items-center">
@@ -89,7 +99,7 @@ export default function Navbar() {
           ))}
         </ul>
 
-        {/* Right: Actions — Admin/Client + Logout when logged in, else Login + Get Started */}
+        {/* Right: Actions  -  Admin/Client + Logout when logged in, else Login + Get Started */}
         <div className="hidden md:flex items-center gap-2 md:gap-3 shrink-0 pl-2">
           {isAdminLoggedIn() ? (
             <>
@@ -190,9 +200,9 @@ export default function Navbar() {
             </svg>
         </button>
 
-        {/* Mobile Menu Dropdown — solid background so content is readable, above backdrop */}
+        {/* Mobile Menu Dropdown  -  only visible below lg; never show on desktop */}
         {open && (
-          <div className="absolute top-full left-0 right-0 mt-4 p-6 z-[110] bg-white border border-primary-200/80 rounded-2xl shadow-xl shadow-black/20 animate-fade-in-up origin-top flex flex-col gap-4 max-h-[calc(100vh-7rem)] overflow-y-auto">
+          <div className="absolute top-full left-0 right-0 mt-4 p-6 z-[110] bg-white border border-primary-200/80 rounded-2xl shadow-xl shadow-black/20 animate-fade-in-up origin-top flex flex-col gap-4 max-h-[calc(100vh-7rem)] overflow-y-auto lg:hidden">
             <ul className="space-y-2">
               {navLinks.map(({ to, label }) => (
                 <li key={to}>

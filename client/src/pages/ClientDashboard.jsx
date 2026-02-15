@@ -28,7 +28,7 @@ const navItems = [
 ];
 
 function formatDate(value) {
-  if (!value) return '—';
+  if (!value) return '-';
   const d = typeof value === 'string' ? new Date(value) : value;
   if (isNaN(d.getTime())) return value;
   return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
@@ -115,7 +115,7 @@ export default function ClientDashboard() {
         <main className="flex-1 min-w-0 overflow-y-auto admin-scroll">
           <div className="max-w-[1600px] mx-auto px-3 sm:px-6 lg:px-8 py-5 sm:py-8 md:py-10">
 
-            {/* Page header — same as Admin */}
+            {/* Page header  -  same as Admin */}
             <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 sm:gap-6 mb-6 sm:mb-10">
               <div className="min-w-0">
                 <h1 className="section-heading text-primary-950 mb-2 text-2xl sm:text-3xl md:text-4xl">
@@ -163,40 +163,40 @@ export default function ClientDashboard() {
               </div>
             )}
 
-            {/* Overview — same layout as Admin: stats + grid */}
+            {/* Overview  -  same layout as Admin: stats + grid */}
             {activeSection === 'overview' && (
               <div className="space-y-8 animate-fade-in-up">
                 <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3 sm:gap-5">
                   <StatCard
                     icon={FolderOpen}
                     label="Active projects"
-                    value={loading ? '—' : (summary?.projectsCount ?? projects.length)}
+                    value={loading ? '-' : (summary?.projectsCount ?? projects.length)}
                     helper={loading ? 'Loading…' : `${projects.length} project${projects.length !== 1 ? 's' : ''}`}
                   />
                   <StatCard
                     icon={FileText}
                     label="Deliverables"
-                    value={loading ? '—' : (summary?.deliverablesCount ?? deliverables.length)}
+                    value={loading ? '-' : (summary?.deliverablesCount ?? deliverables.length)}
                     helper={loading ? 'Loading…' : 'Available to you'}
                   />
                   <StatCard
                     icon={CheckCircle}
                     label="Invoices paid"
-                    value={loading ? '—' : (summary?.paidInvoicesCount ?? invoices.filter((i) => i.status === 'Paid').length)}
+                    value={loading ? '-' : (summary?.paidInvoicesCount ?? invoices.filter((i) => i.status === 'Paid').length)}
                     helper={loading ? 'Loading…' : summary?.totalPaidFormatted ? `Total ${summary.totalPaidFormatted}` : ''}
                     tone="success"
                   />
                   <StatCard
                     icon={Clock}
                     label="Amount due"
-                    value={loading ? '—' : (summary?.totalUnpaidFormatted ?? 'Rs. 0.00')}
+                    value={loading ? '-' : (summary?.totalUnpaidFormatted ?? 'Rs. 0.00')}
                     helper={loading ? 'Loading…' : summary?.unpaidInvoicesCount ? `${summary.unpaidInvoicesCount} unpaid` : 'All clear'}
                     tone="warning"
                   />
                 </div>
 
                 <div className="grid lg:grid-cols-3 gap-6">
-                  {/* Recent Activity — projects + invoices table like Admin */}
+                  {/* Recent Activity  -  projects + invoices table like Admin */}
                   <div className="lg:col-span-2 admin-card-glass rounded-2xl overflow-hidden flex flex-col min-h-[280px] sm:min-h-[320px]">
                     <div className="px-4 sm:px-6 py-4 sm:py-5 border-b border-primary-100 flex items-center justify-between gap-2 flex-wrap">
                       <h2 className="text-base font-bold text-primary-950 flex items-center gap-2">
@@ -264,7 +264,7 @@ export default function ClientDashboard() {
                     </div>
                   </div>
 
-                  {/* Summary card — dark like Admin Billing Health */}
+                  {/* Summary card  -  dark like Admin Billing Health */}
                   <div className="bg-primary-900 text-white rounded-2xl p-6 shadow-xl shadow-primary-900/20 relative overflow-hidden flex flex-col min-h-[320px] border border-primary-800/50">
                     <div className="absolute top-0 right-0 w-48 h-48 bg-primary-500/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
                     <div className="relative z-10 flex flex-col flex-1">
@@ -482,7 +482,7 @@ export default function ClientDashboard() {
               </div>
             )}
 
-            {/* Messages — empty state like Admin Clients/Settings */}
+            {/* Messages  -  empty state like Admin Clients/Settings */}
             {activeSection === 'messages' && (
               <div className="flex flex-col items-center justify-center min-h-[50vh] admin-card-glass rounded-2xl animate-fade-in-up">
                 <div className="w-24 h-24 bg-primary-50 rounded-full flex items-center justify-center mb-6">

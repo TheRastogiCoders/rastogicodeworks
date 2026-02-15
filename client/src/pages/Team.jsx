@@ -52,7 +52,7 @@ export default function Team() {
         </div>
       </section>
 
-      {/* Founder profile — single featured card */}
+      {/* Founder profile  -  single featured card */}
       <section className="py-20 md:py-28 bg-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="rounded-3xl border border-slate-200 bg-white shadow-xl shadow-slate-200/30 overflow-hidden hover:shadow-2xl hover:shadow-slate-200/40 transition-shadow duration-300">
@@ -77,7 +77,7 @@ export default function Team() {
                 <p className="text-lg text-slate-600 leading-relaxed mb-6">
                   {founder.focus}
                 </p>
-                {/* Contact icons — LinkedIn, WhatsApp, Call, Mail */}
+                {/* Contact icons  -  LinkedIn, WhatsApp, Call, Mail */}
                 <div className="flex flex-wrap items-center gap-3 mb-8">
                   <a
                     href={founder.linkedin}
@@ -135,7 +135,7 @@ export default function Team() {
                 We plug into your team
               </h2>
               <p className="text-slate-600 text-lg leading-relaxed mb-8">
-                We work as an extension of your existing team—or as your full product team if you&apos;re just getting started. You get direct access to the people doing the work, regular check-ins, and honest guidance.
+                We work as an extension of your existing team - or as your full product team if you&apos;re just getting started. You get direct access to the people doing the work, regular check-ins, and honest guidance.
               </p>
               <ul className="space-y-4">
                 {howWeWork.map((item, i) => (

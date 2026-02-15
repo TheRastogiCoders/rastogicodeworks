@@ -311,41 +311,41 @@ export default function AdminDashboard() {
               </div>
             )}
 
-            {/* Overview Section — real data, modern layout */}
+            {/* Overview Section  -  real data, modern layout */}
             {activeSection === 'overview' && (
               <div className="space-y-8 animate-fade-in-up">
-                {/* Stats Grid — real metrics from API */}
+                {/* Stats Grid  -  real metrics from API */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3 sm:gap-5">
                   <StatCard
                     icon={DollarSign}
                     label="Total Revenue"
-                    value={loading ? '—' : `Rs. ${overviewStats.totalRevenue.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
+                    value={loading ? '-' : `Rs. ${overviewStats.totalRevenue.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
                     helper={loading ? 'Loading…' : `${overviewStats.totalInvoices} invoice${overviewStats.totalInvoices !== 1 ? 's' : ''} generated`}
                   />
                   <StatCard
                     icon={CheckCircle}
                     label="Paid Revenue"
-                    value={loading ? '—' : `Rs. ${overviewStats.paidRevenue.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
+                    value={loading ? '-' : `Rs. ${overviewStats.paidRevenue.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
                     helper={loading ? 'Loading…' : `${overviewStats.paidCount} cleared`}
                     tone="success"
                   />
                   <StatCard
                     icon={Clock}
                     label="Pending Amount"
-                    value={loading ? '—' : `Rs. ${overviewStats.pendingRevenue.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
+                    value={loading ? '-' : `Rs. ${overviewStats.pendingRevenue.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
                     helper={loading ? 'Loading…' : `${overviewStats.unpaidCount} awaiting payment`}
                     tone="warning"
                   />
                   <StatCard
                     icon={TrendingUp}
                     label="Average Invoice"
-                    value={loading ? '—' : overviewStats.totalInvoices ? `Rs. ${overviewStats.averageInvoice.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : 'Rs. 0.00'}
+                    value={loading ? '-' : overviewStats.totalInvoices ? `Rs. ${overviewStats.averageInvoice.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : 'Rs. 0.00'}
                     helper="Per invoice"
                   />
                 </div>
 
                 <div className="grid lg:grid-cols-3 gap-6">
-                  {/* Recent Activity — real invoice list */}
+                  {/* Recent Activity  -  real invoice list */}
                   <div className="lg:col-span-2 admin-card-glass rounded-2xl overflow-hidden flex flex-col min-h-[280px] sm:min-h-[320px]">
                     <div className="px-4 sm:px-6 py-4 sm:py-5 border-b border-primary-100 flex items-center justify-between gap-2 flex-wrap">
                       <h2 className="text-base font-bold text-primary-950 flex items-center gap-2">
@@ -423,7 +423,7 @@ export default function AdminDashboard() {
                     </div>
                   </div>
 
-                  {/* Billing Health — real pending % from data */}
+                  {/* Billing Health  -  real pending % from data */}
                   <div className="bg-primary-900 text-white rounded-2xl p-6 shadow-xl shadow-primary-900/20 relative overflow-hidden flex flex-col min-h-[320px] border border-primary-800/50">
                     <div className="absolute top-0 right-0 w-48 h-48 bg-primary-500/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
                     <div className="relative z-10 flex flex-col flex-1">
@@ -548,7 +548,7 @@ export default function AdminDashboard() {
                         </div>
                       </div>
 
-                      {/* Line Items — table-style alignment */}
+                      {/* Line Items  -  table-style alignment */}
                       <div className="space-y-4">
                         <div className="flex items-center justify-between">
                           <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-1">Line Items</label>
@@ -561,7 +561,7 @@ export default function AdminDashboard() {
                           </button>
                         </div>
 
-                        {/* Table header — hidden on small, visible md+ */}
+                        {/* Table header  -  hidden on small, visible md+ */}
                         <div className="hidden md:grid grid-cols-12 gap-3 px-4 py-2 rounded-t-xl bg-primary-50/60 border border-primary-200/60 border-b-0 text-[10px] font-bold uppercase tracking-wider text-primary-700">
                           <div className="col-span-6">Description</div>
                           <div className="col-span-2 text-center">Qty</div>
@@ -716,11 +716,11 @@ export default function AdminDashboard() {
                         <div className="grid grid-cols-2 gap-4 sm:gap-8 mb-6 sm:mb-8">
                           <div>
                             <p className="text-xs font-bold uppercase tracking-wider text-primary-600/80 mb-1">Issued Date</p>
-                            <p className="font-semibold text-primary-950">{invoiceDate ? new Date(invoiceDate).toLocaleDateString('en-IN', { dateStyle: 'medium' }) : '—'}</p>
+                            <p className="font-semibold text-primary-950">{invoiceDate ? new Date(invoiceDate).toLocaleDateString('en-IN', { dateStyle: 'medium' }) : '-'}</p>
                           </div>
                           <div>
                             <p className="text-xs font-bold uppercase tracking-wider text-primary-600/80 mb-1">Due Date</p>
-                            <p className="font-semibold text-primary-950">{dueDate ? new Date(dueDate).toLocaleDateString('en-IN', { dateStyle: 'medium' }) : '—'}</p>
+                            <p className="font-semibold text-primary-950">{dueDate ? new Date(dueDate).toLocaleDateString('en-IN', { dateStyle: 'medium' }) : '-'}</p>
                           </div>
                         </div>
 
@@ -806,7 +806,7 @@ export default function AdminDashboard() {
                             </td>
                             <td className="px-4 sm:px-6 md:px-8 py-3 sm:py-5 whitespace-nowrap">
                               <span className="text-sm font-medium text-primary-700/80">
-                                {inv.dueDate ? new Date(inv.dueDate).toLocaleDateString('en-IN', { dateStyle: 'medium' }) : '—'}
+                                {inv.dueDate ? new Date(inv.dueDate).toLocaleDateString('en-IN', { dateStyle: 'medium' }) : '-'}
                               </span>
                             </td>
                             <td className="px-4 sm:px-6 md:px-8 py-3 sm:py-5 text-right whitespace-nowrap">
