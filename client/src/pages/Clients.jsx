@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, Building2, Briefcase, CheckCircle, Quote } from 'lucide-react';
 import PageCTA from '../components/PageCTA';
+import SEO from '../components/SEO';
 
 const clientLogos = [
   'Databot-labs',
@@ -83,6 +84,11 @@ const stats = [
 export default function Clients() {
   return (
     <div className="overflow-x-hidden bg-white selection:bg-primary-100 selection:text-primary-900 font-sans">
+      <SEO
+        title="Clients & Work"
+        description="Featured clients and projects by Rastogi Codeworks. Finance dashboards, revamped websites, and digital products we've built for startups and enterprises."
+        path="/clients"
+      />
       {/* Hero  -  refined, editorial */}
       <section className="relative min-h-[85vh] flex items-center pt-28 pb-20 md:pt-40 md:pb-28 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-slate-50 via-white to-slate-50" />

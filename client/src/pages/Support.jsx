@@ -1,9 +1,15 @@
 import { Link } from 'react-router-dom';
 import PageCTA from '../components/PageCTA';
+import SEO from '../components/SEO';
 
 export default function Support() {
   return (
     <div className="overflow-x-hidden bg-white">
+      <SEO
+        title="Support"
+        description="Get help with your Rastogi Codeworks project, account, or technical issues. Contact our support team."
+        path="/support"
+      />
       <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden">
         <div className="absolute inset-0 bg-grid-pattern opacity-[0.4] pointer-events-none" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">

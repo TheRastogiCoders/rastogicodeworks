@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Mail, Phone, MapPin, Clock, Send, MessageCircle, Linkedin, CheckCircle, ArrowRight } from 'lucide-react';
 import PageCTA from '../components/PageCTA';
+import SEO from '../components/SEO';
 
 const API_BASE = import.meta.env.VITE_API_URL || import.meta.env.VITE_SERVER_URL || 'http://localhost:5000';
 
@@ -91,6 +92,11 @@ export default function Contact() {
 
   return (
     <div className="overflow-x-hidden bg-white selection:bg-primary-100 selection:text-primary-900 font-sans">
+      <SEO
+        title="Contact"
+        description="Get in touch with Rastogi Codeworks. Email, phone, or contact form. We'd love to hear about your project and discuss how we can help."
+        path="/contact"
+      />
       {/* Hero  -  inviting, connection-focused */}
       <section className="relative pt-32 pb-20 md:pt-48 md:pb-28 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-slate-50 via-white to-slate-50" />

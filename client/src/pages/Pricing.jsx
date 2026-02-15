@@ -1,11 +1,17 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, CheckCircle2, Sparkles } from 'lucide-react';
 import PageCTA from '../components/PageCTA';
+import SEO from '../components/SEO';
 import { services } from '../data/services';
 
 export default function Pricing() {
   return (
     <div className="overflow-x-hidden bg-white selection:bg-primary-100 selection:text-primary-900 font-sans">
+      <SEO
+        title="Pricing"
+        description="Transparent pricing for every service. Get a tailored quote for web development, mobile apps, cloud, and more. All projects scoped to your needs."
+        path="/pricing"
+      />
       {/* Hero */}
       <section className="relative pt-32 pb-20 md:pt-48 md:pb-28 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-slate-50 via-white to-primary-50/30" />

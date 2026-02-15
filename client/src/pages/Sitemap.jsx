@@ -1,5 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import PageCTA from '../components/PageCTA';
+import SEO from '../components/SEO';
 import { services } from '../data/services';
 
 export default function Sitemap() {
@@ -36,6 +37,11 @@ export default function Sitemap() {
 
   return (
     <div className="overflow-x-hidden bg-white">
+      <SEO
+        title="Sitemap"
+        description="Find your way around Rastogi Codeworks. Links to all pages: Home, About, Services, Clients, Pricing, Contact, Blog, FAQ, and more."
+        path="/sitemap"
+      />
       <section className="relative pt-32 pb-20 md:pt-48 md:pb-24 overflow-hidden">
         <div className="absolute inset-0 bg-grid-pattern opacity-[0.4] pointer-events-none" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">

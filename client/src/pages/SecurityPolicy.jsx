@@ -1,9 +1,15 @@
 import { Link } from 'react-router-dom';
 import PageCTA from '../components/PageCTA';
+import SEO from '../components/SEO';
 
 export default function SecurityPolicy() {
   return (
     <div className="overflow-x-hidden bg-white">
+      <SEO
+        title="Security Policy"
+        description="Rastogi Codeworks security policy. How we protect your data, our website, and our systems."
+        path="/security-policy"
+      />
       <section className="relative pt-32 pb-12 md:pt-48 md:pb-16 overflow-hidden">
         <div className="absolute inset-0 bg-grid-pattern opacity-[0.4] pointer-events-none" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">

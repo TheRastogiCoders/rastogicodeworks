@@ -1,9 +1,16 @@
 import { Link } from 'react-router-dom';
 import PageCTA from '../components/PageCTA';
+import SEO from '../components/SEO';
+import AnimateOnScroll from '../components/AnimateOnScroll';
 
 export default function About() {
   return (
     <div className="overflow-x-hidden bg-white">
+      <SEO
+        title="About Us"
+        description="Rastogi Codeworks - architects of the digital future. We are a collective of thinkers, makers, and problem solvers building software that matters."
+        path="/about"
+      />
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden">
         {/* Background Elements */}
@@ -30,6 +37,7 @@ export default function About() {
       {/* The Journey Section */}
       <section className="py-24 bg-white relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <AnimateOnScroll variant="up">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="relative group">
               <div className="absolute inset-0 bg-gradient-to-br from-primary-500 to-primary-600 rounded-[2rem] rotate-3 group-hover:rotate-2 transition-transform duration-500 opacity-20 blur-sm" />
@@ -66,6 +74,7 @@ export default function About() {
               </div>
             </div>
           </div>
+          </AnimateOnScroll>
         </div>
       </section>
 
@@ -73,6 +82,7 @@ export default function About() {
       <section className="py-24 bg-primary-950 text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-grid-pattern opacity-[0.05]" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <AnimateOnScroll variant="up">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-5xl font-bold mb-6">Why We Are Different</h2>
             <p className="text-lg text-primary-200/80 max-w-2xl mx-auto">
@@ -119,6 +129,7 @@ export default function About() {
               </div>
             ))}
           </div>
+          </AnimateOnScroll>
         </div>
       </section>
 

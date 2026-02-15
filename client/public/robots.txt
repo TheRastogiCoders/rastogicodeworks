@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Sitemap (update base URL if your domain differs)
+Sitemap: https://rastogicodeworks.com/sitemap.xml

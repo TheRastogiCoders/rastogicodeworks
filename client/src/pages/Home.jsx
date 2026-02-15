@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { MapPin } from 'lucide-react';
 import PageCTA from '../components/PageCTA';
+import SEO from '../components/SEO';
+import AnimateOnScroll from '../components/AnimateOnScroll';
 
 const logos = [
   'Nb Aurum',
@@ -217,9 +220,25 @@ export default function Home() {
   }, []);
 
   const slide = heroSlides[currentSlide];
+  const organizationJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Rastogi Codeworks',
+    url: 'https://rastogicodeworks.com',
+    logo: 'https://rastogicodeworks.com/logo.png',
+    description: 'Where Code Meets Experience. Professional software development and digital solutions across India.',
+    areaServed: { '@type': 'Country', name: 'India' },
+    sameAs: [],
+  };
 
   return (
     <div className="overflow-x-hidden">
+      <SEO
+        title="Home"
+        description="Rastogi Codeworks - Best software development & web development across India. Mumbai, Delhi, Bangalore, Hyderabad, Chennai, Pune, Kolkata and all states & cities. Where Code Meets Experience."
+        path="/"
+        jsonLd={organizationJsonLd}
+      />
       {/* Hero Section */}
       <section className="relative min-h-screen flex flex-col justify-start md:justify-center items-center pt-28 pb-24 md:pt-48 md:pb-32 overflow-hidden bg-white">
         {/* Background Grid */}
@@ -429,12 +448,12 @@ export default function Home() {
       {/* Bento Grid Services */}
       <section className="pt-24 pb-12 md:pb-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
+          <AnimateOnScroll variant="up" className="text-center mb-16">
             <h2 className="text-3xl md:text-5xl font-bold text-primary-950 mb-4">Everything You Need</h2>
             <p className="text-lg text-slate-600 max-w-2xl mx-auto">
               We provide end-to-end software solutions tailored to your specific business needs.
             </p>
-          </div>
+          </AnimateOnScroll>
 
           {/* Row 1: Software & App Development (big left) + Organization Setup (short right) */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
@@ -521,7 +540,7 @@ export default function Home() {
       {/* Featured Work / Projects */}
       <section className="pt-12 pb-24 md:pt-16 md:pb-24 bg-primary-50/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row justify-between items-center md:items-end gap-4 mb-8">
+          <AnimateOnScroll variant="up" className="flex flex-col md:flex-row justify-between items-center md:items-end gap-4 mb-8">
             <div>
               <h2 className="text-3xl md:text-5xl font-bold text-primary-950 mb-4">Selected Work</h2>
               <p className="text-lg text-slate-600 max-w-xl">
@@ -536,9 +555,10 @@ export default function Home() {
                 </svg>
               </Link>
             </div>
-          </div>
+          </AnimateOnScroll>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 stagger-children">
+          <AnimateOnScroll variant="scale" delay={100}>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Project 1  -  Nb Aurum Solutions */}
             <a
               href="https://nbaurum.com"
@@ -634,13 +654,15 @@ export default function Home() {
                 </div>
               </div>
             </a>
-          </div>
+            </div>
+          </AnimateOnScroll>
         </div>
       </section>
 
       {/* Innovation Spotlight - Split Hero (marketing + SEO) */}
       <section className="py-24 bg-white overflow-hidden" aria-labelledby="innovation-heading">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <AnimateOnScroll variant="up">
           <div className="bg-primary-50 rounded-[3rem] p-8 md:p-12 lg:p-16 relative overflow-hidden">
             {/* Background Decor */}
             <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-br from-primary-200/30 to-transparent rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
@@ -704,6 +726,7 @@ export default function Home() {
               </div>
             </div>
           </div>
+          </AnimateOnScroll>
         </div>
       </section>
 
@@ -711,6 +734,7 @@ export default function Home() {
       <section className="py-24 bg-white relative overflow-hidden" aria-labelledby="brochure-heading">
         <div className="absolute left-0 bottom-0 w-[500px] h-[500px] bg-primary-100/30 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2 pointer-events-none" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <AnimateOnScroll variant="scale">
           <div className="relative rounded-[2rem] md:rounded-[2.5rem] overflow-hidden bg-gradient-to-br from-primary-50 via-white to-primary-50/50 border border-primary-100/80 shadow-xl shadow-primary-900/5">
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(34,197,94,0.08),transparent)] pointer-events-none" />
             <div className="relative z-10 p-8 sm:p-10 md:p-12 lg:p-16">
@@ -748,6 +772,7 @@ export default function Home() {
               </div>
             </div>
           </div>
+          </AnimateOnScroll>
         </div>
       </section>
 
@@ -849,6 +874,34 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Locations - modern, aesthetic, SEO-optimized */}
+      <section className="relative py-20 md:py-24 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-primary-50/40 via-white to-primary-50/30" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary-200/20 blur-3xl pointer-events-none" />
+        <div className="relative max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+          <AnimateOnScroll variant="scale">
+          <div className="rounded-3xl border border-primary-100/80 bg-white/80 backdrop-blur-sm shadow-lg shadow-primary-500/5 p-8 md:p-10 text-center">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-500/10 border border-primary-200/60 text-primary-700 text-sm font-medium mb-6">
+              <MapPin className="w-4 h-4 text-primary-600" />
+              <span>Pan-India</span>
+            </div>
+            <h2 className="text-2xl md:text-3xl font-bold text-primary-950 mb-4 tracking-tight">
+              Best Services in All Cities & States of India
+            </h2>
+            <p className="text-slate-600 text-base md:text-lg leading-relaxed mb-8 max-w-xl mx-auto">
+              We deliver software development and digital solutions across every state and union territory in India - from metros to tier‑2 cities.
+            </p>
+            <Link
+              to="/services#services-grid"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary-600 text-white font-semibold shadow-lg shadow-primary-500/25 hover:bg-primary-700 hover:shadow-xl hover:shadow-primary-500/30 hover:-translate-y-0.5 transition-all duration-300"
+            >
+              View our services
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+            </Link>
+          </div>
+          </AnimateOnScroll>
+        </div>
+      </section>
 
       <PageCTA
         title="Ready to build something extraordinary?"

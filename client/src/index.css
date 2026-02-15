@@ -198,3 +198,81 @@
 .animate-admin-in {
   animation: admin-fade-in-up 0.5s ease-out forwards;
 }
+
+/* Scroll-reveal: applied when element enters viewport (via AnimateOnScroll) */
+.reveal-in {
+  opacity: 0;
+  transform: translateY(24px);
+}
+.reveal-in.reveal-visible {
+  animation: reveal 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.reveal-in.reveal-scale {
+  transform: translateY(16px) scale(0.98);
+}
+.reveal-in.reveal-scale.reveal-visible {
+  animation: scale-in-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+@keyframes scale-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+.reveal-in.reveal-left {
+  transform: translateX(-24px);
+}
+.reveal-in.reveal-left.reveal-visible {
+  animation: slide-in-left 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+@keyframes slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+.reveal-in.reveal-right {
+  transform: translateX(24px);
+}
+.reveal-in.reveal-right.reveal-visible {
+  animation: slide-in-right 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Modern button/link hover - subtle scale */
+.hover-lift {
+  @apply transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)];
+}
+.hover-lift:hover {
+  @apply -translate-y-0.5;
+}
+.hover-lift:active {
+  @apply scale-[0.98];
+}

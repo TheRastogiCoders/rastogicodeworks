@@ -1,9 +1,15 @@
 import { Link } from 'react-router-dom';
 import PageCTA from '../components/PageCTA';
+import SEO from '../components/SEO';
 
 export default function TermsConditions() {
   return (
     <div className="overflow-x-hidden bg-white">
+      <SEO
+        title="Terms & Conditions"
+        description="Terms and conditions for using the Rastogi Codeworks website and services. Read our legal terms and user agreement."
+        path="/terms-and-conditions"
+      />
       <section className="relative pt-32 pb-12 md:pt-48 md:pb-16 overflow-hidden">
         <div className="absolute inset-0 bg-grid-pattern opacity-[0.4] pointer-events-none" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">

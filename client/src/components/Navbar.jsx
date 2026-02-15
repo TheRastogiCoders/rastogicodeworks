@@ -63,8 +63,13 @@ export default function Navbar() {
           : 'bg-white/80 sm:bg-white/90 border border-primary-200/60 sm:border-white/40 shadow-lg shadow-black/10'
       }`}>
         
-        {/* Left: Logo + Brand name  -  switch logo when navbar is dark (scrolled); click goes to home */}
-        <Link to="/" aria-label="Go to home" className="flex items-center gap-2 md:gap-3 shrink-0 min-w-0 max-w-[60%] sm:max-w-none group">
+        {/* Left: Logo + Brand name  -  switch logo when navbar is dark (scrolled); click goes to home and scroll to top */}
+        <Link
+          to="/"
+          aria-label="Go to home"
+          className="flex items-center gap-2 md:gap-3 shrink-0 min-w-0 max-w-[60%] sm:max-w-none group"
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        >
           <img
             src={darkMode ? '/logo_transparent.png' : '/transparent_logo.png'}
             alt="Rastogi Codeworks"

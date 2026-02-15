@@ -1,10 +1,13 @@
 import { Link } from 'react-router-dom';
 import PageCTA from '../components/PageCTA';
+import SEO from '../components/SEO';
+import AnimateOnScroll from '../components/AnimateOnScroll';
 import { 
   ArrowRight, Code, Zap, Globe, CheckCircle, HelpCircle, ChevronDown, ChevronUp
 } from 'lucide-react';
 import { useState } from 'react';
 import { services } from '../data/services';
+import { citiesForSEO } from '../data/locations';
 
 const reasons = [
   {
@@ -76,6 +79,11 @@ function FAQItem({ question, answer }) {
 export default function Services() {
   return (
     <div className="overflow-x-hidden bg-white selection:bg-primary-100 selection:text-primary-900">
+      <SEO
+        title="Services"
+        description={`Best software development & web development services across India - Mumbai, Delhi, Bangalore, Pune, Hyderabad, Chennai, ${citiesForSEO} and all states. Get a tailored quote.`}
+        path="/services"
+      />
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden">
         {/* Background Elements */}
@@ -300,6 +308,35 @@ export default function Services() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Locations - modern, aesthetic, SEO-optimized */}
+      <section className="relative py-20 md:py-24 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-50 via-white to-primary-50/30" />
+        <div className="absolute top-1/2 right-0 w-[400px] h-[400px] rounded-full bg-primary-200/25 blur-3xl pointer-events-none -translate-y-1/2 translate-x-1/4" />
+        <div className="relative max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+          <AnimateOnScroll variant="scale">
+          <div className="rounded-3xl border border-primary-100/80 bg-white/80 backdrop-blur-sm shadow-lg shadow-primary-500/5 p-8 md:p-10 text-center">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-500/10 border border-primary-200/60 text-primary-700 text-sm font-medium mb-6">
+              <Globe className="w-4 h-4 text-primary-600" />
+              <span>We Serve All of India</span>
+            </div>
+            <h2 className="text-2xl md:text-3xl font-bold text-primary-950 mb-4 tracking-tight">
+              Best Services Across Every State & City
+            </h2>
+            <p className="text-slate-600 text-base md:text-lg leading-relaxed mb-8 max-w-xl mx-auto">
+              Rastogi Codeworks delivers software development, web development, and digital solutions across India - in every state and union territory, from metros to tier‑2 cities.
+            </p>
+            <Link
+              to="/contact"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary-600 text-white font-semibold shadow-lg shadow-primary-500/25 hover:bg-primary-700 hover:shadow-xl hover:shadow-primary-500/30 hover:-translate-y-0.5 transition-all duration-300"
+            >
+              Get a free consultation
+              <ArrowRight className="w-5 h-5" />
+            </Link>
+          </div>
+          </AnimateOnScroll>
         </div>
       </section>
 
