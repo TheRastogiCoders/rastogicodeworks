@@ -27,7 +27,7 @@ export default function BackToTopButton() {
       type="button"
       onClick={scrollToTop}
       aria-label="Scroll to top"
-      className="fixed bottom-6 right-6 z-[80] flex h-14 w-14 items-center justify-center rounded-full border border-white/20 bg-primary-500 text-white shadow-xl shadow-primary-500/25 hover:bg-primary-600 hover:shadow-2xl hover:shadow-primary-500/30 hover:-translate-y-0.5 hover:border-white/30 active:scale-95 focus:outline-none focus:ring-2 focus:ring-primary-400/80 focus:ring-offset-2 focus:ring-offset-white transition-all duration-300 ease-out animate-scale-in"
+      className="fixed bottom-6 right-6 z-[80] flex h-14 w-14 items-center justify-center rounded-full border border-white/30 bg-primary-500/75 backdrop-blur-md text-white shadow-xl shadow-primary-500/20 hover:bg-primary-500/90 hover:shadow-2xl hover:shadow-primary-500/25 hover:-translate-y-0.5 hover:border-white/40 active:scale-95 focus:outline-none focus:ring-2 focus:ring-primary-400/80 focus:ring-offset-2 focus:ring-offset-white transition-all duration-300 ease-out animate-scale-in"
     >
       <ChevronUp className="w-6 h-6" strokeWidth={2.5} aria-hidden />
     </button>

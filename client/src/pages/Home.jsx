@@ -221,7 +221,7 @@ export default function Home() {
   return (
     <div className="overflow-x-hidden">
       {/* Hero Section */}
-      <section className="relative min-h-screen flex flex-col justify-center items-center pt-48 pb-32 overflow-hidden bg-white">
+      <section className="relative min-h-screen flex flex-col justify-start md:justify-center items-center pt-28 pb-24 md:pt-48 md:pb-32 overflow-hidden bg-white">
         {/* Background Grid */}
         <div className="absolute inset-0 bg-grid-pattern opacity-[0.6] pointer-events-none" />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/60 to-white pointer-events-none" />
@@ -271,6 +271,18 @@ export default function Home() {
               >
                 {slide.secondaryCta}
               </Link>
+              <a
+                href="/Rastogicodeworks-Broucher.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                download="Rastogi-Codeworks-Brochure.pdf"
+                className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white/90 text-primary-700 border border-primary-200 font-semibold text-lg hover:bg-primary-50 hover:border-primary-300 transition-all duration-300 hover:-translate-y-1 shadow-sm hover:shadow-md backdrop-blur-sm"
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                </svg>
+                Download brochure
+              </a>
             </div>
           </div>
 
@@ -688,6 +700,50 @@ export default function Home() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                     </svg>
                   </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Brochure - Download PDF */}
+      <section className="py-24 bg-white relative overflow-hidden" aria-labelledby="brochure-heading">
+        <div className="absolute left-0 bottom-0 w-[500px] h-[500px] bg-primary-100/30 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2 pointer-events-none" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="relative rounded-[2rem] md:rounded-[2.5rem] overflow-hidden bg-gradient-to-br from-primary-50 via-white to-primary-50/50 border border-primary-100/80 shadow-xl shadow-primary-900/5">
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(34,197,94,0.08),transparent)] pointer-events-none" />
+            <div className="relative z-10 p-8 sm:p-10 md:p-12 lg:p-16">
+              <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8 lg:gap-12">
+                <div className="flex items-start gap-6">
+                  <div className="flex-shrink-0 w-16 h-16 rounded-2xl bg-primary-500/10 flex items-center justify-center text-primary-600">
+                    <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-primary-600 uppercase tracking-widest mb-2">Company overview</p>
+                    <h2 id="brochure-heading" className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary-950 tracking-tight mb-3">
+                      Download our brochure
+                    </h2>
+                    <p className="text-slate-600 text-lg max-w-xl leading-relaxed">
+                      Get our company brochure with services, approach, and how we work. One PDF to share with your team or keep for reference.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex-shrink-0">
+                  <a
+                    href="/Rastogicodeworks-Broucher.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    download="Rastogi-Codeworks-Brochure.pdf"
+                    className="inline-flex items-center gap-3 px-6 py-4 rounded-xl bg-primary-600 text-white font-semibold text-base shadow-lg shadow-primary-500/25 hover:bg-primary-700 hover:shadow-xl hover:shadow-primary-500/30 hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+                  >
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                    </svg>
+                    Download brochure (PDF)
+                  </a>
                 </div>
               </div>
             </div>
