@@ -15,7 +15,8 @@ import { dashboardRouter } from './routes/dashboard.js';
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = Number(process.env.PORT) || 5000;
+const HOST = '0.0.0.0';
 
 const allowedOrigins = (process.env.CLIENT_URL || 'http://localhost:5173')
   .split(',')
@@ -60,8 +61,9 @@ connectDb()
   .then(() => bootstrapAdmin())
   .catch((err) => console.error('[startup]', err))
   .finally(() => {
-    app.listen(PORT, () => {
-      console.log(`Server running at http://localhost:${PORT}`);
+    app.listen(PORT, HOST, () => {
+      const env = process.env.NODE_ENV || 'development';
+      console.log(`Server running at http://${HOST}:${PORT} (${env})`);
     });
   });
 

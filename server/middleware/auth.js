@@ -14,16 +14,22 @@ export function issueToken(res, payload) {
   );
 
   const isProduction = process.env.NODE_ENV === 'production';
+  // Cross-origin (e.g. Vercel client + Render API) requires sameSite: 'none' and secure
   res.cookie(TOKEN_COOKIE_NAME, token, {
     httpOnly: true,
     secure: isProduction,
-    sameSite: isProduction ? 'strict' : 'lax',
+    sameSite: isProduction ? 'none' : 'lax',
     maxAge: TOKEN_MAX_AGE_MS,
   });
 }
 
 export function clearToken(res) {
-  res.clearCookie(TOKEN_COOKIE_NAME, { httpOnly: true, sameSite: 'lax' });
+  const isProduction = process.env.NODE_ENV === 'production';
+  res.clearCookie(TOKEN_COOKIE_NAME, {
+    httpOnly: true,
+    sameSite: isProduction ? 'none' : 'lax',
+    secure: isProduction,
+  });
 }
 
 export function requireAuth(req, res, next) {

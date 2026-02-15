@@ -22,6 +22,7 @@ import {
   Download
 } from 'lucide-react';
 import { downloadInvoicePdf } from '../utils/invoicePdf.js';
+import DashboardNavbar from '../components/DashboardNavbar';
 
 const emptyItem = { description: '', quantity: 1, price: 0 };
 
@@ -250,100 +251,14 @@ export default function AdminDashboard() {
 
   return (
     <div className="admin-dashboard min-h-screen flex flex-col font-sans text-primary-900 antialiased bg-gradient-to-br from-primary-50/40 via-white to-primary-50/20">
-      {/* Top bar — responsive pill nav: compact on xs/sm, full on md+ */}
-      <header className="sticky top-0 z-40 shrink-0 flex justify-center pt-[max(12px,env(safe-area-inset-top))] sm:pt-[max(14px,env(safe-area-inset-top))] md:pt-4 lg:pt-6 pb-2 sm:pb-3 md:pb-4 lg:pb-6 px-2 sm:px-3 md:px-4 bg-gradient-to-b from-primary-50/30 to-transparent">
-        <nav className="relative w-full max-w-7xl min-h-[56px] h-[56px] sm:min-h-[64px] sm:h-[64px] md:min-h-[72px] md:h-[72px] lg:min-h-[84px] lg:h-[84px] xl:h-[96px] pl-2 pr-2 sm:pl-4 sm:pr-4 md:pl-6 md:pr-6 lg:pl-8 lg:pr-8 rounded-full flex items-center justify-between gap-1 sm:gap-2 md:gap-4 bg-white/90 sm:bg-white/80 border border-primary-200/60 sm:border-white/60 shadow-lg shadow-black/5 backdrop-blur-xl transition-all duration-300 overflow-hidden max-w-[95vw] sm:max-w-[95%]">
-          {/* Left: Logo + Brand — scales down on small screens */}
-          <Link to="/" className="flex items-center gap-1.5 sm:gap-2 md:gap-3 shrink-0 min-w-0 max-w-[45%] sm:max-w-[50%] md:max-w-none group">
-            <img
-              src="/transparent_logo.png"
-              alt="Rastogi Codeworks"
-              className="h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 lg:h-14 lg:w-14 object-contain flex-shrink-0 group-hover:scale-105 transition-transform duration-300"
-            />
-            <span className="flex flex-col min-w-0">
-              <span className="font-brand font-semibold text-[10px] min-[380px]:text-xs sm:text-sm md:text-lg lg:text-xl xl:text-2xl tracking-tight truncate italic text-primary-950">
-                Rastogi Codeworks
-              </span>
-              <span className="text-[8px] min-[380px]:text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-primary-600 mt-0.5 truncate">Admin</span>
-            </span>
-          </Link>
-
-          {/* Middle: Nav links — desktop only */}
-          <ul className="hidden lg:flex items-center gap-1 xl:gap-2 flex-shrink min-w-0">
-            {navItems.map(({ id, label, icon: Icon }) => (
-              <li key={id} className="flex items-center">
-                <button
-                  type="button"
-                  onClick={() => setActiveSection(id)}
-                  className={`flex items-center gap-2 px-3 xl:px-4 py-2 rounded-full text-sm xl:text-base font-medium transition-colors duration-200 ease-out whitespace-nowrap ${
-                    activeSection === id
-                      ? 'bg-primary-50 text-primary-700 font-semibold'
-                      : 'text-slate-600 hover:text-primary-700 hover:bg-slate-50'
-                  }`}
-                >
-                  <Icon className="w-4 h-4 shrink-0" />
-                  {label}
-                </button>
-              </li>
-            ))}
-          </ul>
-
-          {/* Right: Actions — desktop md+ */}
-          <div className="hidden md:flex items-center gap-2 lg:gap-3 shrink-0 pl-2">
-            <button
-              type="button"
-              onClick={() => setActiveSection('create')}
-              className="inline-flex items-center gap-2 px-4 py-2.5 lg:px-5 lg:py-3 rounded-full font-semibold text-sm lg:text-base transition-all duration-300 hover:scale-[1.02] active:scale-95 whitespace-nowrap text-white bg-primary-500 hover:bg-primary-400 shadow-md shadow-primary-500/20"
-            >
-              <Plus className="w-4 h-4 shrink-0" />
-              New Invoice
-            </button>
-            <button
-              type="button"
-              onClick={handleLogout}
-              className="flex items-center gap-2 px-4 py-2.5 lg:px-5 lg:py-3 rounded-full text-sm lg:text-base font-semibold transition-colors duration-200 whitespace-nowrap text-slate-600 hover:text-primary-700 hover:bg-slate-50"
-            >
-              <LogOut className="w-4 h-4 shrink-0" />
-              Logout
-            </button>
-          </div>
-
-          {/* Mobile/Tablet: icon nav + New + Logout — 44px touch targets, scrollable */}
-          <div className="flex lg:hidden items-center gap-1 sm:gap-1.5 shrink-0 overflow-x-auto overflow-y-hidden scrollbar-hide min-h-[44px]">
-            {navItems.map(({ id, label, icon: Icon }) => (
-              <button
-                key={id}
-                type="button"
-                onClick={() => setActiveSection(id)}
-                className={`min-w-[44px] min-h-[44px] flex items-center justify-center p-2.5 rounded-full transition-colors shrink-0 touch-manipulation ${
-                  activeSection === id ? 'bg-primary-50 text-primary-700' : 'text-slate-600 hover:text-primary-700 hover:bg-slate-50'
-                }`}
-                title={label}
-                aria-label={label}
-              >
-                <Icon className="w-5 h-5 sm:w-5 sm:h-5" />
-              </button>
-            ))}
-            <div className="w-px h-6 bg-slate-200 mx-0.5 shrink-0" aria-hidden />
-            <button
-              type="button"
-              onClick={() => setActiveSection('create')}
-              className="inline-flex items-center gap-1.5 min-h-[44px] px-3 py-2 rounded-full text-xs font-semibold text-white bg-primary-500 hover:bg-primary-400 shadow-md shadow-primary-500/20 shrink-0 touch-manipulation"
-            >
-              <Plus className="w-4 h-4 shrink-0" />
-              <span className="hidden min-[400px]:inline">New</span>
-            </button>
-            <button
-              type="button"
-              onClick={handleLogout}
-              className="min-w-[44px] min-h-[44px] flex items-center justify-center p-2.5 rounded-full text-slate-600 hover:text-primary-700 hover:bg-slate-50 transition-colors shrink-0 touch-manipulation"
-              aria-label="Logout"
-            >
-              <LogOut className="w-5 h-5" />
-            </button>
-          </div>
-        </nav>
-      </header>
+      <DashboardNavbar
+        variant="admin"
+        navItems={navItems}
+        activeSection={activeSection}
+        setActiveSection={setActiveSection}
+        onLogout={handleLogout}
+        onNewInvoice={() => setActiveSection('create')}
+      />
 
       <div className="flex flex-1 min-h-0 overflow-hidden">
         <main className="flex-1 min-w-0 overflow-y-auto admin-scroll">

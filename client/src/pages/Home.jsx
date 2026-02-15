@@ -415,7 +415,7 @@ export default function Home() {
       </section>
 
       {/* Bento Grid Services */}
-      <section className="py-24 bg-white">
+      <section className="pt-24 pb-12 md:pb-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-5xl font-bold text-primary-950 mb-4">Everything You Need</h2>
@@ -507,21 +507,23 @@ export default function Home() {
       </section>
 
       {/* Featured Work / Projects */}
-      <section className="py-24 bg-primary-50/20">
+      <section className="pt-12 pb-24 md:pt-16 md:pb-24 bg-primary-50/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+          <div className="flex flex-col md:flex-row justify-between items-center md:items-end gap-4 mb-8">
             <div>
               <h2 className="text-3xl md:text-5xl font-bold text-primary-950 mb-4">Selected Work</h2>
               <p className="text-lg text-slate-600 max-w-xl">
                 A showcase of our recent projects where design meets engineering excellence.
               </p>
             </div>
-            <Link to="/clients" className="group flex items-center gap-2 text-primary-600 font-semibold hover:text-primary-700 transition-colors">
-              View all projects
-              <svg className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </Link>
+            <div className="flex justify-center md:justify-end w-full md:w-auto shrink-0">
+              <Link to="/clients" className="group inline-flex items-center gap-2 text-primary-600 font-semibold hover:text-primary-700 transition-colors">
+                View all projects
+                <svg className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </Link>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 stagger-children">

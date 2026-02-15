@@ -47,20 +47,20 @@ export default function Navbar() {
           aria-hidden
         />
       )}
-      <nav className={`relative z-10 pointer-events-auto backdrop-blur-xl rounded-full pl-3 pr-3 sm:pl-5 sm:pr-5 md:pl-8 md:pr-8 h-[56px] sm:h-[72px] md:h-[84px] lg:h-[96px] w-[95%] max-w-7xl min-w-0 transition-all duration-300 flex items-center justify-between gap-1 sm:gap-2 md:gap-4 ${open ? 'overflow-visible' : 'overflow-hidden'} ${
+      <nav className={`relative z-10 pointer-events-auto backdrop-blur-xl rounded-full pl-3 pr-3 sm:pl-5 sm:pr-5 md:pl-8 md:pr-8 h-[72px] sm:h-[76px] md:h-[84px] lg:h-[96px] w-[95%] max-w-7xl min-w-0 transition-all duration-300 flex items-center justify-between gap-1 sm:gap-2 md:gap-4 ${open ? 'overflow-visible' : 'overflow-hidden'} ${
         darkMode 
           ? 'bg-primary-900/95 border border-white/20 shadow-lg shadow-black/20' 
           : 'bg-white/95 sm:bg-white/90 border border-primary-200/60 sm:border-white/40 shadow-lg shadow-black/10'
       }`}>
         
-        {/* Left: Logo + Brand name — switch logo when navbar is dark (scrolled) */}
-        <Link to="/" className="flex items-center gap-2 md:gap-3 shrink-0 min-w-0 max-w-[60%] sm:max-w-none group">
+        {/* Left: Logo + Brand name — switch logo when navbar is dark (scrolled); click goes to home */}
+        <Link to="/" aria-label="Go to home" className="flex items-center gap-2 md:gap-3 shrink-0 min-w-0 max-w-[60%] sm:max-w-none group">
           <img
             src={darkMode ? '/logo_transparent.png' : '/transparent_logo.png'}
             alt="Rastogi Codeworks"
             className="h-9 w-9 sm:h-10 sm:w-10 md:h-12 md:w-12 lg:h-14 lg:w-14 object-contain flex-shrink-0 group-hover:scale-105 transition-transform duration-300"
           />
-          <span className={`font-brand font-semibold text-xs sm:text-sm md:text-lg lg:text-xl xl:text-2xl tracking-tight truncate italic transition-colors duration-300 ${
+          <span className={`font-brand font-semibold text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl tracking-tight truncate italic transition-colors duration-300 ${
             darkMode ? 'text-white' : 'text-primary-950'
           }`}>
             Rastogi Codeworks

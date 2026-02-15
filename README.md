@@ -28,7 +28,7 @@ cd ../server && npm install
 ### 2. Environment (optional)
 
 - **Server:** Copy `server/.env.example` to `server/.env` and set `PORT` and `CLIENT_URL` if needed.
-- **Client:** Vite proxies `/api` to `http://localhost:5000` by default.
+- **Client:** For local dev the app uses `http://localhost:5000` as the API URL. For production, set `VITE_API_URL` (see [Deployment](#deployment)).
 
 ### 3. Run development
 
@@ -50,16 +50,54 @@ Client runs at **http://localhost:5173**.
 
 Open **http://localhost:5173** in the browser to view the site.
 
-## Production
+## Deployment (Vercel + Render)
 
-1. Build the client:
+**Client (Vercel)** and **Server (Render)** are set up for production.
 
-   ```bash
-   npm run build
-   ```
+### Deploy backend (Render)
 
-2. Serve the built files from `client/dist` (e.g. with Express static middleware or Nginx) and run the API on the same or another host.
-3. Set `CLIENT_URL` in the server to your frontend origin for CORS.
+1. Create a **Web Service** on [Render](https://render.com). Connect your repo.
+2. **Root directory:** leave default (repo root).  
+   **Build command:** `cd server && npm install`  
+   **Start command:** `npm start` (uses root script: `cd server && npm start`).
+4. Set **Environment Variables** in the Render dashboard:
+
+   | Variable       | Value (example)                    |
+   |----------------|------------------------------------|
+   | `NODE_ENV`     | `production`                       |
+   | `CLIENT_URL`   | `https://your-app.vercel.app`      |
+   | `MONGODB_URI`  | your MongoDB Atlas (or other) URI  |
+   | `JWT_SECRET`   | long random string                 |
+   | `ADMIN_EMAIL`  | (optional) admin login email      |
+   | `ADMIN_PASSWORD` | (optional) admin password      |
+
+5. Deploy. Note your Render URL (e.g. `https://your-api.onrender.com`).
+
+### Deploy frontend (Vercel)
+
+1. Create a project on [Vercel](https://vercel.com). Import your repo.
+2. **Root directory:** `client`.
+3. **Build command:** `npm run build` (default for Vite).
+4. **Output directory:** `dist` (default for Vite).
+5. Set **Environment Variable:**
+
+   | Variable        | Value                          |
+   |-----------------|--------------------------------|
+   | `VITE_API_URL`  | `https://your-api.onrender.com` (your Render URL, no trailing slash) |
+
+6. Deploy. Your app will call the Render API; cookies work cross-origin (sameSite: none, secure).
+
+### Local development
+
+- **Server:** `npm run server` (uses `PORT` from `.env` or 5000).
+- **Client:** `npm run client` (uses `http://localhost:5000` when `VITE_API_URL` is unset).
+- No CORS issues when both run on localhost.
+
+## Production (generic)
+
+1. Build the client: `npm run build` (from repo root or `client/`).
+2. Serve `client/dist` with a static host or CDN.
+3. Run the API (e.g. on Render) and set `CLIENT_URL` to your frontend origin for CORS.
 
 ## Project structure
 
