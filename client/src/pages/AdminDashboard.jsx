@@ -19,7 +19,10 @@ import {
   ArrowRight,
   Briefcase,
   Calendar,
-  Download
+  Download,
+  UserPlus,
+  Copy,
+  KeyRound,
 } from 'lucide-react';
 import { downloadInvoicePdf } from '../utils/invoicePdf.js';
 import DashboardNavbar from '../components/DashboardNavbar';
@@ -53,6 +56,15 @@ export default function AdminDashboard() {
   const [pdfLoading, setPdfLoading] = useState(false);
   const [error, setError] = useState('');
 
+  // Clients (onboarding) state
+  const [clients, setClients] = useState([]);
+  const [clientsLoading, setClientsLoading] = useState(false);
+  const [clientForm, setClientForm] = useState({ name: '', email: '', password: '' });
+  const [clientCreateLoading, setClientCreateLoading] = useState(false);
+  const [clientCreateError, setClientCreateError] = useState('');
+  const [createdCredentials, setCreatedCredentials] = useState(null); // { email, temporaryPassword } after create
+  const [clientDeletingId, setClientDeletingId] = useState(null); // id of client being deleted
+
   const totals = useMemo(() => calculateInvoiceTotals(items), [items]);
 
   const handleItemChange = (index, field, value) => {
@@ -81,6 +93,8 @@ export default function AdminDashboard() {
     setItems((prev) => prev.filter((_, i) => i !== index));
   };
 
+  const [invoiceClientEmail, setInvoiceClientEmail] = useState(''); // link invoice to portal client (for Clients table)
+
   const resetForm = () => {
     setClientName('');
     setBillingAddress('');
@@ -88,6 +102,7 @@ export default function AdminDashboard() {
     setDueDate('');
     setItems([{ ...emptyItem }]);
     setNotes('');
+    setInvoiceClientEmail('');
   };
 
   const handleCreateInvoice = (e) => {
@@ -96,6 +111,7 @@ export default function AdminDashboard() {
 
     const payload = {
       clientName: clientName.trim(),
+      clientEmail: invoiceClientEmail.trim() || undefined,
       billingAddress: billingAddress.trim() || undefined,
       invoiceDate,
       dueDate,
@@ -239,6 +255,82 @@ export default function AdminDashboard() {
       })
       .finally(() => setLoading(false));
   }, []);
+
+  // Fetch clients when opening Clients section or Create Invoice (for linking invoices to clients)
+  useEffect(() => {
+    if (activeSection !== 'clients' && activeSection !== 'create') return;
+    setClientsLoading(true);
+    fetch(`${API_BASE}/api/clients`, { credentials: 'include' })
+      .then(async (res) => {
+        if (!res.ok) throw new Error('Failed to load clients');
+        return res.json();
+      })
+      .then((data) => setClients(data.clients || []))
+      .catch(() => setClients([]))
+      .finally(() => setClientsLoading(false));
+  }, [activeSection]);
+
+  const generatePassword = () => {
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
+    let s = '';
+    for (let i = 0; i < 12; i++) s += chars.charAt(Math.floor(Math.random() * chars.length));
+    setClientForm((prev) => ({ ...prev, password: s }));
+  };
+
+  const handleCreateClient = (e) => {
+    e.preventDefault();
+    setClientCreateError('');
+    setCreatedCredentials(null);
+    const { name, email, password } = clientForm;
+    if (!email.trim()) {
+      setClientCreateError('Email is required.');
+      return;
+    }
+    if (!password || password.length < 8) {
+      setClientCreateError('Password must be at least 8 characters.');
+      return;
+    }
+    setClientCreateLoading(true);
+    fetch(`${API_BASE}/api/clients`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ name: name.trim() || undefined, email: email.trim().toLowerCase(), password }),
+    })
+      .then(async (res) => {
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) throw new Error(data.message || 'Failed to create client');
+        return data;
+      })
+      .then((data) => {
+        setCreatedCredentials({ email: data.client.email, temporaryPassword: data.temporaryPassword });
+        setClientForm({ name: '', email: '', password: '' });
+        setClients((prev) => [{ ...data.client, createdAt: data.client.createdAt }, ...prev]);
+      })
+      .catch((err) => setClientCreateError(err.message || 'Failed to create client'))
+      .finally(() => setClientCreateLoading(false));
+  };
+
+  const copyToClipboard = (text) => {
+    navigator.clipboard?.writeText(text).then(() => {});
+  };
+
+  const handleDeleteClient = async (client) => {
+    const id = client._id || client.id;
+    if (!id) return;
+    if (!window.confirm(`Remove client "${client.name || client.email}"? They will no longer be able to sign in to the portal.`)) return;
+    setClientDeletingId(id);
+    try {
+      const res = await fetch(`${API_BASE}/api/clients/${id}`, { method: 'DELETE', credentials: 'include' });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.message || 'Failed to delete');
+      setClients((prev) => prev.filter((c) => (c._id || c.id) !== id));
+    } catch (err) {
+      setClientCreateError(err.message || 'Failed to delete client.');
+    } finally {
+      setClientDeletingId(null);
+    }
+  };
 
   const navItems = [
     { id: 'overview', label: 'Overview', icon: LayoutDashboard },
@@ -514,6 +606,24 @@ export default function AdminDashboard() {
                               required
                             />
                           </div>
+                        </div>
+                        <div className="space-y-2">
+                          <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-1">Link to portal client (optional)</label>
+                          <select
+                            value={invoiceClientEmail}
+                            onChange={(e) => {
+                              setInvoiceClientEmail(e.target.value);
+                              const c = clients.find((x) => x.email === e.target.value);
+                              if (c && c.name && !clientName) setClientName(c.name);
+                            }}
+                            className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all outline-none font-medium text-slate-900"
+                          >
+                            <option value="">— None —</option>
+                            {clients.map((c) => (
+                              <option key={c._id || c.id} value={c.email}>{c.name || c.email}</option>
+                            ))}
+                          </select>
+                          <p className="text-[10px] text-slate-500 ml-1">Shows this invoice under that client in Clients.</p>
                         </div>
                         <div className="space-y-2 md:col-span-2">
                           <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-1">Billing Address</label>
@@ -850,15 +960,187 @@ export default function AdminDashboard() {
               </div>
             )}
 
-            {/* Empty States for other sections */}
-            {(activeSection === 'clients' || activeSection === 'settings') && (
+            {/* Clients — create credentials + list */}
+            {activeSection === 'clients' && (
+              <div className="space-y-6 animate-fade-in-up">
+                <div className="admin-card-glass rounded-2xl border border-primary-200/60 p-6 sm:p-8">
+                  <h2 className="text-lg font-bold text-primary-950 mb-1 flex items-center gap-2">
+                    <UserPlus className="w-5 h-5 text-primary-500" />
+                    Create client credentials (onboarding)
+                  </h2>
+                  <p className="text-sm text-primary-700/80 mb-6">
+                    Add a new client so they can sign in to the client portal. Share the credentials with them securely.
+                  </p>
+                  {createdCredentials && (
+                    <div className="mb-6 p-4 rounded-xl bg-primary-50 border border-primary-200">
+                      <p className="text-sm font-semibold text-primary-800 mb-2">Credentials created — share with the client (password is shown only once):</p>
+                      <div className="flex flex-wrap gap-3">
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs text-primary-600 font-medium">Email:</span>
+                          <code className="px-2 py-1 rounded bg-white border border-primary-200 text-sm font-mono">{createdCredentials.email}</code>
+                          <button type="button" onClick={() => copyToClipboard(createdCredentials.email)} className="p-1.5 rounded-lg hover:bg-primary-100 text-primary-600" title="Copy">
+                            <Copy className="w-4 h-4" />
+                          </button>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs text-primary-600 font-medium">Password:</span>
+                          <code className="px-2 py-1 rounded bg-white border border-primary-200 text-sm font-mono">{createdCredentials.temporaryPassword}</code>
+                          <button type="button" onClick={() => copyToClipboard(createdCredentials.temporaryPassword)} className="p-1.5 rounded-lg hover:bg-primary-100 text-primary-600" title="Copy">
+                            <Copy className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </div>
+                      <button type="button" onClick={() => setCreatedCredentials(null)} className="mt-3 text-xs font-semibold text-primary-600 hover:text-primary-700">
+                        Dismiss
+                      </button>
+                    </div>
+                  )}
+                  <form onSubmit={handleCreateClient} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
+                    <div>
+                      <label className="block text-xs font-semibold text-primary-700 mb-1.5">Name (optional)</label>
+                      <input
+                        type="text"
+                        value={clientForm.name}
+                        onChange={(e) => setClientForm((p) => ({ ...p, name: e.target.value }))}
+                        placeholder="Client name"
+                        className="w-full px-4 py-2.5 rounded-xl border border-primary-200 bg-white text-primary-900 placeholder:text-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-400"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-semibold text-primary-700 mb-1.5">Email *</label>
+                      <input
+                        type="email"
+                        value={clientForm.email}
+                        onChange={(e) => setClientForm((p) => ({ ...p, email: e.target.value }))}
+                        placeholder="client@example.com"
+                        required
+                        className="w-full px-4 py-2.5 rounded-xl border border-primary-200 bg-white text-primary-900 placeholder:text-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-400"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-semibold text-primary-700 mb-1.5">Password (min 8 chars)</label>
+                      <div className="flex gap-2">
+                        <input
+                          type="text"
+                          value={clientForm.password}
+                          onChange={(e) => setClientForm((p) => ({ ...p, password: e.target.value }))}
+                          placeholder="Set a password"
+                          minLength={8}
+                          className="flex-1 min-w-0 px-4 py-2.5 rounded-xl border border-primary-200 bg-white text-primary-900 placeholder:text-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-400 font-mono text-sm"
+                        />
+                        <button type="button" onClick={generatePassword} className="p-2.5 rounded-xl border border-primary-200 bg-primary-50 text-primary-700 hover:bg-primary-100 shrink-0" title="Generate password">
+                          <KeyRound className="w-5 h-5" />
+                        </button>
+                      </div>
+                    </div>
+                    <div>
+                      <button type="submit" disabled={clientCreateLoading} className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-primary-600 text-white font-semibold hover:bg-primary-700 disabled:opacity-50 transition-all flex items-center justify-center gap-2">
+                        {clientCreateLoading ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <UserPlus className="w-4 h-4" />}
+                        Create client
+                      </button>
+                    </div>
+                  </form>
+                  {clientCreateError && (
+                    <p className="mt-3 text-sm text-red-600 flex items-center gap-2">
+                      <AlertCircle className="w-4 h-4 shrink-0" />
+                      {clientCreateError}
+                    </p>
+                  )}
+                </div>
+
+                <div className="admin-card-glass rounded-2xl border border-primary-200/60 overflow-hidden">
+                  <div className="px-4 sm:px-6 py-4 border-b border-primary-100">
+                    <h2 className="text-lg font-bold text-primary-950 flex items-center gap-2">
+                      <Users className="w-5 h-5 text-primary-500" />
+                      Client portal users
+                    </h2>
+                    <p className="text-sm text-primary-700/80 mt-0.5">All clients who can sign in to the portal.</p>
+                  </div>
+                  {clientsLoading ? (
+                    <div className="flex items-center justify-center py-16">
+                      <div className="w-10 h-10 border-2 border-primary-200 border-t-primary-600 rounded-full animate-spin" />
+                    </div>
+                  ) : clients.length === 0 ? (
+                    <div className="py-12 text-center text-primary-600">
+                      <Users className="w-12 h-12 mx-auto mb-3 opacity-50" />
+                      <p className="font-medium">No clients yet</p>
+                      <p className="text-sm mt-1">Create credentials above to onboard a client.</p>
+                    </div>
+                  ) : (
+                    <div className="overflow-x-auto">
+                      <table className="w-full min-w-[400px] text-left text-sm">
+                        <thead className="bg-primary-50/50 border-b border-primary-100">
+                          <tr>
+                            <th className="px-4 sm:px-6 py-3 font-semibold text-primary-700 text-xs uppercase tracking-wider">Name</th>
+                            <th className="px-4 sm:px-6 py-3 font-semibold text-primary-700 text-xs uppercase tracking-wider">Email</th>
+                            <th className="px-4 sm:px-6 py-3 font-semibold text-primary-700 text-xs uppercase tracking-wider">Projects / Invoices</th>
+                            <th className="px-4 sm:px-6 py-3 font-semibold text-primary-700 text-xs uppercase tracking-wider">Created</th>
+                            <th className="px-4 sm:px-6 py-3 font-semibold text-primary-700 text-xs uppercase tracking-wider text-right">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-primary-100/50">
+                          {clients.map((c) => {
+                            const clientInvoices = c.invoices || [];
+                            return (
+                            <tr key={c._id || c.id} className="hover:bg-primary-50/30 transition-colors">
+                              <td className="px-4 sm:px-6 py-3 font-medium text-primary-900">{c.name || '-'}</td>
+                              <td className="px-4 sm:px-6 py-3 text-primary-700">{c.email}</td>
+                              <td className="px-4 sm:px-6 py-3 text-primary-700 max-w-[220px]">
+                                {clientInvoices.length === 0 ? (
+                                  <span className="text-primary-500 italic">No invoices yet</span>
+                                ) : (
+                                  <div className="flex flex-col gap-1">
+                                    {clientInvoices.slice(0, 3).map((inv) => (
+                                      <span key={inv._id} className="text-sm">
+                                        {inv.clientName || 'Invoice'}
+                                        <span className="text-primary-500 text-xs ml-1">
+                                          (Rs. {Number(inv.total || 0).toLocaleString('en-IN', { maximumFractionDigits: 0 })} · {inv.status})
+                                        </span>
+                                      </span>
+                                    ))}
+                                    {clientInvoices.length > 3 && (
+                                      <span className="text-xs text-primary-500">+{clientInvoices.length - 3} more</span>
+                                    )}
+                                  </div>
+                                )}
+                              </td>
+                              <td className="px-4 sm:px-6 py-3 text-primary-600">
+                                {c.createdAt ? new Date(c.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : '-'}
+                              </td>
+                              <td className="px-4 sm:px-6 py-3 text-right">
+                                <button
+                                  type="button"
+                                  onClick={() => handleDeleteClient(c)}
+                                  disabled={clientDeletingId === (c._id || c.id)}
+                                  className="p-2 rounded-lg text-red-600 hover:bg-red-50 hover:text-red-700 disabled:opacity-50 transition-colors"
+                                  title="Delete client"
+                                >
+                                  {clientDeletingId === (c._id || c.id) ? (
+                                    <div className="w-5 h-5 border-2 border-red-300 border-t-red-600 rounded-full animate-spin" />
+                                  ) : (
+                                    <Trash2 className="w-5 h-5" />
+                                  )}
+                                </button>
+                              </td>
+                            </tr>
+                          ); })}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Empty state for Settings */}
+            {activeSection === 'settings' && (
               <div className="flex flex-col items-center justify-center min-h-[50vh] admin-card-glass rounded-2xl animate-fade-in-up">
                  <div className="w-24 h-24 bg-primary-50 rounded-full flex items-center justify-center mb-6">
-                    {activeSection === 'clients' ? <Users className="w-10 h-10 text-primary-500" /> : <Settings className="w-10 h-10 text-primary-500" />}
+                    <Settings className="w-10 h-10 text-primary-500" />
                  </div>
                  <h2 className="text-2xl font-bold text-primary-950 mb-2">Coming Soon</h2>
                  <p className="text-primary-700/80 max-w-md text-center mb-8">
-                   We are working hard to bring you advanced {activeSection} management features. Stay tuned for updates!
+                   We are working hard to bring you advanced settings management features. Stay tuned for updates!
                  </p>
                  <button 
                    onClick={() => setActiveSection('overview')}

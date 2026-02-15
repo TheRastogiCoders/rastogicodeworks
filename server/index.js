@@ -11,6 +11,7 @@ import { contactRouter } from './routes/contact.js';
 import { authRouter } from './routes/auth.js';
 import { invoicesRouter } from './routes/invoices.js';
 import { dashboardRouter } from './routes/dashboard.js';
+import { clientsRouter } from './routes/clients.js';
 
 dotenv.config();
 
@@ -61,6 +62,7 @@ app.use('/api/contact', contactRouter);
 app.use('/api/auth', authLimiter, authRouter);
 app.use('/api/invoices', invoicesRouter);
 app.use('/api/dashboard', dashboardRouter);
+app.use('/api/clients', clientsRouter);
 
 app.use((err, req, res, next) => {
   console.error('[global-error]', err);

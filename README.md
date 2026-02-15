@@ -91,8 +91,8 @@ Open **http://localhost:5173** in the browser to view the site.
 
 ### Local development
 
-- **Server:** `npm run server` (uses `PORT` from `.env` or 5000).
-- **Client:** `npm run client` (uses `http://localhost:5000` when `VITE_API_URL` is unset).
+- **Server:** Run `npm run server` from the project root first (backend on http://localhost:5000). Login and API calls will fail with "Can't reach the server" if the server is not running.
+- **Client:** Run `npm run client` (frontend on http://localhost:5173). The app uses `http://localhost:5000` when `VITE_API_URL` is unset or empty.
 - No CORS issues when both run on localhost.
 
 ## Production (generic)
