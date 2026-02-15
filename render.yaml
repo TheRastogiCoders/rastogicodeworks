@@ -1,0 +1,31 @@
+# Render Blueprint – one-click deploy for the backend API
+# Docs: https://render.com/docs/blueprint-spec
+
+services:
+  - type: web
+    name: rastogi-api
+    runtime: node
+    plan: free
+
+    # Run everything from the server folder (monorepo)
+    rootDir: server
+    buildCommand: npm install
+    startCommand: npm start
+
+    # Health check for zero-downtime deploys
+    healthCheckPath: /api/health
+
+    # Set in Render Dashboard (Environment) – do not commit secrets
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: CLIENT_URL
+        sync: false
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
