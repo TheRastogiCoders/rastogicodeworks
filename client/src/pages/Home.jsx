@@ -416,7 +416,7 @@ export default function Home() {
                 </div>
                 {/* Live session hero */}
                 <div className="relative rounded-2xl overflow-hidden border border-white/10 group mb-4">
-                  <img src="/background.png" alt="Live collaboration" className="w-full h-45 object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <img src="/meetings.png" alt="Live session - team collaboration and meetings" className="w-full h-45 object-cover group-hover:scale-105 transition-transform duration-500" />
                   <div className="absolute inset-0 bg-gradient-to-t from-primary-950/90 via-primary-900/40 to-transparent" />
                   <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between">
                     <div className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-white/10 backdrop-blur-md border border-white/20">

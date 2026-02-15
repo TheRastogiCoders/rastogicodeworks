@@ -7,7 +7,6 @@ import morgan from 'morgan';
 import rateLimit from 'express-rate-limit';
 import { connectDb } from './config/db.js';
 import { bootstrapAdmin } from './scripts/bootstrapAdmin.js';
-import { contactRouter } from './routes/contact.js';
 import { authRouter } from './routes/auth.js';
 import { invoicesRouter } from './routes/invoices.js';
 import { dashboardRouter } from './routes/dashboard.js';
@@ -58,7 +57,6 @@ app.get('/api/health', (_, res) => {
   res.json({ status: 'ok', message: 'Rastogi Codeworks API' });
 });
 
-app.use('/api/contact', contactRouter);
 app.use('/api/auth', authLimiter, authRouter);
 app.use('/api/invoices', invoicesRouter);
 app.use('/api/dashboard', dashboardRouter);

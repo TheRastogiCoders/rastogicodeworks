@@ -3,7 +3,7 @@ import { Mail, Phone, MapPin, Clock, Send, MessageCircle, Linkedin, CheckCircle,
 import PageCTA from '../components/PageCTA';
 import SEO from '../components/SEO';
 
-import API_BASE from '../config/api';
+const FORMSPREE_URL = 'https://formspree.io/f/xdalgpab';
 
 const emailSubject = 'Enquiry from your website';
 const emailBody = `Hey,
@@ -71,17 +71,17 @@ export default function Contact() {
     setStatus(null);
     setLoading(true);
     try {
-      const res = await fetch(`${API_BASE}/api/contact`, {
+      const res = await fetch(FORMSPREE_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
       });
-      const data = await res.json();
-      if (data.success) {
-        setStatus({ type: 'success', message: data.message });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && data.ok !== false) {
+        setStatus({ type: 'success', message: 'Thank you! We will get back to you soon.' });
         setForm({ name: '', email: '', phone: '', subject: '', message: '' });
       } else {
-        setStatus({ type: 'error', message: data.message || 'Something went wrong.' });
+        setStatus({ type: 'error', message: data.error || 'Something went wrong. Please try again.' });
       }
     } catch {
       setStatus({ type: 'error', message: 'Network error. Please try again.' });
