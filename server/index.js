@@ -63,7 +63,7 @@ connectDb()
   .finally(() => {
     app.listen(PORT, HOST, () => {
       const env = process.env.NODE_ENV || 'development';
-      console.log(`Server running at http://${HOST}:${PORT} (${env})`);
+      console.log(`Server running at http://${HOST}:${PORT} [${env}]`);
     });
   });
 
