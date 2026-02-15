@@ -65,7 +65,7 @@ Open **http://localhost:5173** in the browser to view the site.
    | Variable       | Value (example)                    |
    |----------------|------------------------------------|
    | `NODE_ENV`     | `production`                       |
-   | `CLIENT_URL`   | `https://your-app.vercel.app`      |
+   | `CLIENT_URL`   | `https://rastogicodeworks.vercel.app` (your Vercel URL, no trailing slash; **required** or CORS will block login) |
    | `MONGODB_URI`  | your MongoDB Atlas (or other) URI  |
    | `JWT_SECRET`   | long random string                 |
    | `ADMIN_EMAIL`  | (optional) admin login email      |

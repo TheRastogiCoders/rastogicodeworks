@@ -18,15 +18,25 @@ const app = express();
 const PORT = Number(process.env.PORT) || 5000;
 const HOST = '0.0.0.0';
 
+// Normalize: trim, remove trailing slash, so https://example.vercel.app/ matches
 const allowedOrigins = (process.env.CLIENT_URL || 'http://localhost:5173')
   .split(',')
-  .map((o) => o.trim())
+  .map((o) => o.trim().replace(/\/$/, ''))
   .filter(Boolean);
 
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin: (origin, cb) => {
+      // Allow requests with no origin (e.g. Postman, same-origin)
+      if (!origin) return cb(null, true);
+      const normalized = origin.replace(/\/$/, '');
+      if (allowedOrigins.includes(normalized)) return cb(null, true);
+      cb(new Error('Not allowed by CORS'));
+    },
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    optionsSuccessStatus: 200,
   }),
 );
 
