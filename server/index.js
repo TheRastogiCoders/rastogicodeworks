@@ -54,7 +54,12 @@ const authLimiter = rateLimit({
 });
 
 app.get('/api/health', (_, res) => {
-  res.json({ status: 'ok', message: 'Rastogi Codeworks API' });
+  res.json({
+    status: 'ok',
+    message: 'Rastogi Codeworks API',
+    // Helps debug login: confirms server has admin env (does not expose secrets)
+    adminConfigured: !!(process.env.ADMIN_EMAIL?.trim() && process.env.ADMIN_PASSWORD?.trim()),
+  });
 });
 
 app.use('/api/auth', authLimiter, authRouter);

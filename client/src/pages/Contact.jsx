@@ -45,7 +45,7 @@ const contactOptions = [
     icon: <Linkedin className="w-5 h-5" />,
     label: 'LinkedIn',
     value: 'Connect on LinkedIn',
-    href: 'https://www.linkedin.com/company/rastogi-coders',
+    href: 'https://www.linkedin.com/company/rastogicodeworks/',
   },
 ];
 

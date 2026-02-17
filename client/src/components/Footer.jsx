@@ -73,7 +73,7 @@ export default function Footer() {
             </p>
             <div className="flex gap-3 pt-2">
               <a
-                href="https://www.linkedin.com/company/rastogi-coders"
+                href="https://www.linkedin.com/company/rastogicodeworks/"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"
@@ -81,28 +81,6 @@ export default function Footer() {
               >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-5 h-5" fill="currentColor">
                   <path d="M4.98 3.5C4.98 4.88 3.9 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.25 8.25H4.75V24H.25V8.25zM8.5 8.25H13v2.13h.07c.63-1.2 2.17-2.46 4.47-2.46 4.78 0 5.66 3.15 5.66 7.25V24h-4.5v-7.39c0-1.76-.03-4.02-2.45-4.02-2.45 0-2.83 1.91-2.83 3.89V24H8.5V8.25z" />
-                </svg>
-              </a>
-              <a
-                href="https://github.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="GitHub"
-                className="flex items-center justify-center w-9 h-9 rounded-lg text-[#065F46] hover:text-primary-500 hover:bg-primary-100/80 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-5 h-5" fill="currentColor">
-                  <path fillRule="evenodd" d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.37 7.86 10.89.58.11.79-.25.79-.56 0-.28-.01-1.03-.02-2.03-3.2.7-3.88-1.54-3.88-1.54-.53-1.35-1.3-1.71-1.3-1.71-1.06-.73.08-.72.08-.72 1.17.08 1.78 1.2 1.78 1.2 1.04 1.78 2.73 1.26 3.4.96.11-.76.41-1.26.75-1.55-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.2-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.21-1.49 3.18-1.18 3.18-1.18.63 1.59.23 2.76.11 3.05.75.8 1.2 1.83 1.2 3.09 0 4.43-2.69 5.41-5.25 5.69.42.37.8 1.11.8 2.25 0 1.62-.02 2.93-.02 3.33 0 .31.21.68.8.56A10.52 10.52 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z" clipRule="evenodd" />
-                </svg>
-              </a>
-              <a
-                href="https://x.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Twitter / X"
-                className="flex items-center justify-center w-9 h-9 rounded-lg text-[#065F46] hover:text-primary-500 hover:bg-primary-100/80 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-5 h-5" fill="currentColor">
-                  <path d="M18.25 3.5h3.01l-6.58 7.52L22 20.5h-4.9l-3.84-5.03-4.39 5.03H5.86l7.03-8.05L4.75 3.5h5.08l3.47 4.53 4.95-4.53Zm-1.06 15.2h1.67L7.89 5.71H6.09l11.1 12.99Z" />
                 </svg>
               </a>
             </div>
