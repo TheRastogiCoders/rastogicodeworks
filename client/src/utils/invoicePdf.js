@@ -34,6 +34,7 @@ function loadImageAsDataUrl(url) {
 export async function generateInvoicePdf({
   clientName,
   billingAddress = '',
+  gstNumber = '',
   invoiceDate,
   dueDate,
   items = [],
@@ -87,8 +88,14 @@ export async function generateInvoicePdf({
   doc.setFont(undefined, 'normal');
   doc.setTextColor(71, 85, 105);
   doc.text(`Invoice No.  #${invoiceId}`, pageW - margin, headerY + 14, { align: 'right' });
-  doc.text('Issued  ' + (invoiceDate ? new Date(invoiceDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : '-'), pageW - margin, headerY + 20, { align: 'right' });
-  doc.text('Due  ' + (dueDate ? new Date(dueDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : '-'), pageW - margin, headerY + 26, { align: 'right' });
+  const issuedStr = invoiceDate && String(invoiceDate).trim()
+    ? new Date(invoiceDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
+    : 'N/A';
+  const dueStr = dueDate && String(dueDate).trim()
+    ? new Date(dueDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
+    : 'N/A';
+  doc.text('Issued  ' + issuedStr, pageW - margin, headerY + 20, { align: 'right' });
+  doc.text('Due  ' + dueStr, pageW - margin, headerY + 26, { align: 'right' });
 
   y = headerY + 32;
 
@@ -109,6 +116,12 @@ export async function generateInvoicePdf({
   doc.setTextColor(51, 65, 85);
   doc.text(clientName || 'Client Name', margin, y);
   y += 6;
+  if (gstNumber && String(gstNumber).trim()) {
+    doc.setFontSize(10);
+    doc.setTextColor(71, 85, 105);
+    doc.text('GST: ' + String(gstNumber).trim(), margin, y);
+    y += 6;
+  }
   if (billingAddress && String(billingAddress).trim()) {
     const addressLines = doc.splitTextToSize(String(billingAddress).trim(), contentW);
     doc.setFontSize(10);

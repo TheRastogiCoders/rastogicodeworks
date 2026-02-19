@@ -27,6 +27,7 @@ import {
 import { downloadInvoicePdf } from '../utils/invoicePdf.js';
 import DashboardNavbar from '../components/DashboardNavbar';
 import API_BASE from '../config/api';
+import { getAuthHeaders, clearAuthToken } from '../config/auth';
 
 const emptyItem = { description: '', quantity: 1, price: 0 };
 
@@ -43,9 +44,11 @@ export default function AdminDashboard() {
 
   // Invoice creation form state
   const [clientName, setClientName] = useState('');
+  const [clientGst, setClientGst] = useState('');
   const [billingAddress, setBillingAddress] = useState('');
   const [invoiceDate, setInvoiceDate] = useState(() => new Date().toISOString().slice(0, 10));
   const [dueDate, setDueDate] = useState('');
+  const [invoiceStatus, setInvoiceStatus] = useState('unpaid');
   const [items, setItems] = useState([{ ...emptyItem }]);
   const [notes, setNotes] = useState('');
 
@@ -97,9 +100,11 @@ export default function AdminDashboard() {
 
   const resetForm = () => {
     setClientName('');
+    setClientGst('');
     setBillingAddress('');
     setInvoiceDate(new Date().toISOString().slice(0, 10));
     setDueDate('');
+    setInvoiceStatus('unpaid');
     setItems([{ ...emptyItem }]);
     setNotes('');
     setInvoiceClientEmail('');
@@ -113,8 +118,10 @@ export default function AdminDashboard() {
       clientName: clientName.trim(),
       clientEmail: invoiceClientEmail.trim() || undefined,
       billingAddress: billingAddress.trim() || undefined,
+      gstNumber: clientGst.trim() || undefined,
       invoiceDate,
       dueDate,
+      status: invoiceStatus,
       items: items.filter((i) => i.description || i.quantity || i.price),
       notes,
     };
@@ -124,11 +131,17 @@ export default function AdminDashboard() {
 
     fetch(`${API_BASE}/api/invoices`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...getAuthHeaders() },
       credentials: 'include',
       body: JSON.stringify(payload),
     })
       .then(async (res) => {
+        if (res.status === 401) {
+          clearAuthToken();
+          localStorage.removeItem('isAdmin');
+          window.location.href = '/login';
+          return;
+        }
         if (!res.ok) {
           const data = await res.json().catch(() => ({}));
           throw new Error(data.message || 'Failed to create invoice');
@@ -136,9 +149,11 @@ export default function AdminDashboard() {
         return res.json();
       })
       .then((data) => {
-        setInvoices((prev) => [data.invoice, ...prev]);
-        resetForm();
-        setActiveSection('invoices');
+        if (data?.invoice) {
+          setInvoices((prev) => [data.invoice, ...prev]);
+          resetForm();
+          setActiveSection('invoices');
+        }
       })
       .catch((err) => {
         setError(err.message || 'Something went wrong while creating the invoice.');
@@ -151,9 +166,15 @@ export default function AdminDashboard() {
 
     fetch(`${API_BASE}/api/invoices/${id}`, {
       method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...getAuthHeaders() },
       credentials: 'include',
       body: JSON.stringify({ status }),
+    }).then((res) => {
+      if (res.status === 401) {
+        clearAuthToken();
+        localStorage.removeItem('isAdmin');
+        window.location.href = '/login';
+      }
     }).catch(() => {
       // If request fails, revert status change optimistically
       setInvoices((prev) => prev.map((inv) => (inv._id === id ? { ...inv, status: inv.status } : inv)));
@@ -167,7 +188,14 @@ export default function AdminDashboard() {
 
       fetch(`${API_BASE}/api/invoices/${id}`, {
         method: 'DELETE',
+        headers: getAuthHeaders(),
         credentials: 'include',
+      }).then((res) => {
+        if (res.status === 401) {
+          clearAuthToken();
+          localStorage.removeItem('isAdmin');
+          window.location.href = '/login';
+        }
       }).catch(() => {
         // If delete fails, this invoice will just be re-fetched on next load
       });
@@ -208,6 +236,7 @@ export default function AdminDashboard() {
   }, [invoices]);
 
   const handleLogout = () => {
+    clearAuthToken();
     localStorage.removeItem('isAdmin');
     window.location.href = '/login';
   };
@@ -218,6 +247,7 @@ export default function AdminDashboard() {
       await downloadInvoicePdf({
         clientName: clientName || 'Client Name',
         billingAddress: billingAddress.trim() || undefined,
+        gstNumber: clientGst.trim() || undefined,
         invoiceDate,
         dueDate,
         items,
@@ -238,9 +268,16 @@ export default function AdminDashboard() {
 
     fetch(`${API_BASE}/api/invoices`, {
       method: 'GET',
+      headers: getAuthHeaders(),
       credentials: 'include',
     })
       .then(async (res) => {
+        if (res.status === 401) {
+          clearAuthToken();
+          localStorage.removeItem('isAdmin');
+          window.location.href = '/login';
+          return;
+        }
         if (!res.ok) {
           const data = await res.json().catch(() => ({}));
           throw new Error(data.message || 'Failed to load invoices');
@@ -260,8 +297,14 @@ export default function AdminDashboard() {
   useEffect(() => {
     if (activeSection !== 'clients' && activeSection !== 'create') return;
     setClientsLoading(true);
-    fetch(`${API_BASE}/api/clients`, { credentials: 'include' })
+    fetch(`${API_BASE}/api/clients`, { headers: getAuthHeaders(), credentials: 'include' })
       .then(async (res) => {
+        if (res.status === 401) {
+          clearAuthToken();
+          localStorage.removeItem('isAdmin');
+          window.location.href = '/login';
+          return;
+        }
         if (!res.ok) throw new Error('Failed to load clients');
         return res.json();
       })
@@ -293,11 +336,17 @@ export default function AdminDashboard() {
     setClientCreateLoading(true);
     fetch(`${API_BASE}/api/clients`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...getAuthHeaders() },
       credentials: 'include',
       body: JSON.stringify({ name: name.trim() || undefined, email: email.trim().toLowerCase(), password }),
     })
       .then(async (res) => {
+        if (res.status === 401) {
+          clearAuthToken();
+          localStorage.removeItem('isAdmin');
+          window.location.href = '/login';
+          return;
+        }
         const data = await res.json().catch(() => ({}));
         if (!res.ok) throw new Error(data.message || 'Failed to create client');
         return data;
@@ -321,7 +370,13 @@ export default function AdminDashboard() {
     if (!window.confirm(`Remove client "${client.name || client.email}"? They will no longer be able to sign in to the portal.`)) return;
     setClientDeletingId(id);
     try {
-      const res = await fetch(`${API_BASE}/api/clients/${id}`, { method: 'DELETE', credentials: 'include' });
+      const res = await fetch(`${API_BASE}/api/clients/${id}`, { method: 'DELETE', headers: getAuthHeaders(), credentials: 'include' });
+      if (res.status === 401) {
+        clearAuthToken();
+        localStorage.removeItem('isAdmin');
+        window.location.href = '/login';
+        return;
+      }
       const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data.message || 'Failed to delete');
       setClients((prev) => prev.filter((c) => (c._id || c.id) !== id));
@@ -569,12 +624,12 @@ export default function AdminDashboard() {
               </div>
             )}
 
-            {/* Create Invoice Section */}
+            {/* Create Invoice Section - mobile: form full width, preview below */}
             {activeSection === 'create' && (
-              <div className="grid lg:grid-cols-12 gap-5 sm:gap-8 animate-fade-in-up">
-                {/* Form Side */}
-                <div className="lg:col-span-7 space-y-6 min-w-0">
-                  <form onSubmit={handleCreateInvoice} className="admin-card-glass rounded-2xl p-4 sm:p-6 lg:p-8">
+              <div className="flex flex-col lg:grid lg:grid-cols-12 gap-5 sm:gap-6 lg:gap-8 animate-fade-in-up">
+                {/* Form Side - full width on mobile */}
+                <div className="w-full lg:col-span-7 min-w-0 order-1">
+                  <form onSubmit={handleCreateInvoice} className="admin-card-glass rounded-2xl p-4 sm:p-5 lg:p-8">
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 sm:mb-8 pb-4 sm:pb-6 border-b border-primary-100">
                       <div className="flex items-center gap-4">
                         <img
@@ -590,20 +645,33 @@ export default function AdminDashboard() {
                       <span className="text-[10px] font-bold uppercase tracking-widest text-primary-600 bg-primary-50 px-3 py-1.5 rounded-full border border-primary-200">Draft</span>
                     </div>
 
-                    <div className="space-y-8">
-                      {/* Client Info */}
-                      <div className="grid md:grid-cols-2 gap-6">
-                        <div className="space-y-2">
-                          <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-1">Client Name</label>
-                          <div className="relative">
-                            <Briefcase className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                    <div className="space-y-5 sm:space-y-6">
+                      {/* Client details - GST in first row so always visible */}
+                      <div className="space-y-4">
+                        <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 ml-1">Client details</p>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+                          <div className="space-y-2">
+                            <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-1">Client Name</label>
+                            <div className="relative">
+                              <Briefcase className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                              <input
+                                type="text"
+                                value={clientName}
+                                onChange={(e) => setClientName(e.target.value)}
+                                placeholder="e.g. Acme Corp"
+                                className="w-full pl-10 sm:pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all outline-none font-medium text-slate-900 placeholder:text-slate-400 text-base"
+                                required
+                              />
+                            </div>
+                          </div>
+                          <div className="space-y-2">
+                            <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-1">GST Number (optional)</label>
                             <input
                               type="text"
-                              value={clientName}
-                              onChange={(e) => setClientName(e.target.value)}
-                              placeholder="e.g. Acme Corp"
-                              className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all outline-none font-medium text-slate-900 placeholder:text-slate-400"
-                              required
+                              value={clientGst}
+                              onChange={(e) => setClientGst(e.target.value)}
+                              placeholder="e.g. 27AABCU9603R1ZM"
+                              className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all outline-none font-medium text-slate-900 placeholder:text-slate-400 text-base"
                             />
                           </div>
                         </div>
@@ -616,7 +684,7 @@ export default function AdminDashboard() {
                               const c = clients.find((x) => x.email === e.target.value);
                               if (c && c.name && !clientName) setClientName(c.name);
                             }}
-                            className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all outline-none font-medium text-slate-900"
+                            className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all outline-none font-medium text-slate-900 text-base"
                           >
                             <option value="">— None —</option>
                             {clients.map((c) => (
@@ -625,24 +693,37 @@ export default function AdminDashboard() {
                           </select>
                           <p className="text-[10px] text-slate-500 ml-1">Shows this invoice under that client in Clients.</p>
                         </div>
-                        <div className="space-y-2 md:col-span-2">
+                        <div className="space-y-2">
                           <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-1">Billing Address</label>
                           <textarea
                             value={billingAddress}
                             onChange={(e) => setBillingAddress(e.target.value)}
                             placeholder="Street, City, State, PIN, Country"
                             rows={2}
-                            className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all outline-none font-medium text-slate-900 placeholder:text-slate-400 resize-none"
+                            className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all outline-none font-medium text-slate-900 placeholder:text-slate-400 resize-none text-base"
                           />
                         </div>
-                        <div className="grid grid-cols-2 gap-4 md:col-span-2">
+                        <div className="space-y-2">
+                          <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-1">Status</label>
+                          <select
+                            value={invoiceStatus}
+                            onChange={(e) => setInvoiceStatus(e.target.value)}
+                            className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all outline-none font-medium text-slate-900 text-base"
+                          >
+                            <option value="unpaid">Unpaid</option>
+                            <option value="paid">Paid</option>
+                            <option value="overdue">Overdue</option>
+                          </select>
+                          <p className="text-[10px] text-slate-500 ml-1">Payment status for this invoice.</p>
+                        </div>
+                        <div className="grid grid-cols-2 gap-3 sm:gap-4">
                           <div className="space-y-2">
                             <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-1">Issued</label>
                             <input
                               type="date"
                               value={invoiceDate}
                               onChange={(e) => setInvoiceDate(e.target.value)}
-                              className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all outline-none font-medium text-slate-900"
+                              className="w-full min-w-0 px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all outline-none font-medium text-slate-900 text-base"
                             />
                           </div>
                           <div className="space-y-2">
@@ -651,7 +732,7 @@ export default function AdminDashboard() {
                               type="date"
                               value={dueDate}
                               onChange={(e) => setDueDate(e.target.value)}
-                              className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all outline-none font-medium text-slate-900"
+                              className="w-full min-w-0 px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all outline-none font-medium text-slate-900 text-base"
                             />
                           </div>
                         </div>
@@ -744,12 +825,12 @@ export default function AdminDashboard() {
                       </div>
                     </div>
 
-                    {/* Actions */}
-                    <div className="mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-slate-100 flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
+                    {/* Actions - mobile: stacked, good touch targets */}
+                    <div className="mt-5 sm:mt-6 pt-4 sm:pt-6 border-t border-slate-100 flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
                       <button
                         type="button"
                         onClick={resetForm}
-                        className="w-full sm:w-auto px-6 py-3 rounded-full text-sm font-semibold text-primary-700/80 hover:text-primary-800 hover:bg-primary-50 transition-all order-2 sm:order-1"
+                        className="w-full sm:w-auto px-6 py-3.5 sm:py-3 rounded-xl sm:rounded-full text-sm font-semibold text-primary-700/80 hover:text-primary-800 hover:bg-primary-50 transition-all order-2 sm:order-1 touch-manipulation"
                       >
                         Clear
                       </button>
@@ -758,7 +839,7 @@ export default function AdminDashboard() {
                           type="button"
                           onClick={handleDownloadPdf}
                           disabled={pdfLoading}
-                          className="px-6 py-3 rounded-full border border-primary-200 text-primary-700 text-sm font-semibold hover:bg-primary-50 hover:border-primary-300 transition-all flex items-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+                          className="w-full min-[400px]:w-auto px-6 py-3.5 sm:py-3 rounded-xl sm:rounded-full border border-primary-200 text-primary-700 text-sm font-semibold hover:bg-primary-50 hover:border-primary-300 transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed touch-manipulation"
                         >
                           {pdfLoading ? (
                             <>
@@ -774,7 +855,7 @@ export default function AdminDashboard() {
                         <button
                           type="submit"
                           disabled={loading}
-                          className="px-8 py-3 rounded-full bg-primary-600 text-white text-sm font-semibold hover:bg-primary-700 shadow-lg shadow-primary-500/25 hover:shadow-xl hover:-translate-y-0.5 transition-all flex items-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+                          className="w-full min-[400px]:w-auto px-8 py-3.5 sm:py-3 rounded-xl sm:rounded-full bg-primary-600 text-white text-sm font-semibold hover:bg-primary-700 shadow-lg shadow-primary-500/25 hover:shadow-xl hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed touch-manipulation"
                         >
                           {loading ? (
                             <>
@@ -793,9 +874,9 @@ export default function AdminDashboard() {
                   </form>
                 </div>
 
-                {/* Preview Side */}
-                <div className="lg:col-span-5 space-y-6 min-w-0">
-                  <div className="sticky top-20 sm:top-24 lg:top-24">
+                {/* Preview Side - below form on mobile, sticky on desktop */}
+                <div className="w-full lg:col-span-5 min-w-0 order-2">
+                  <div className="lg:sticky lg:top-24">
                     <div className="admin-card-glass rounded-2xl overflow-hidden border border-primary-200/60">
                       <div className="bg-primary-900 p-5 sm:p-6 lg:p-8 text-white relative overflow-hidden border-b border-primary-800/50">
                         <div className="absolute top-0 right-0 w-64 h-64 bg-primary-500/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
@@ -803,6 +884,9 @@ export default function AdminDashboard() {
                           <div className="min-w-0">
                             <p className="text-xs font-bold uppercase tracking-widest text-primary-300 mb-2">Invoice For</p>
                             <h3 className="text-xl sm:text-2xl font-bold text-white truncate">{clientName || 'Client Name'}</h3>
+                            {clientGst.trim() && (
+                              <p className="text-primary-200 text-sm mt-1">GST: {clientGst.trim()}</p>
+                            )}
                             {billingAddress.trim() && (
                               <p className="text-primary-200 text-sm mt-1 whitespace-pre-line">{billingAddress.trim()}</p>
                             )}
@@ -816,6 +900,12 @@ export default function AdminDashboard() {
                       </div>
                       
                       <div className="p-5 sm:p-6 lg:p-8">
+                        {clientGst.trim() && (
+                          <div className="mb-6">
+                            <p className="text-xs font-bold uppercase tracking-wider text-primary-600/80 mb-1">GST Number</p>
+                            <p className="text-sm text-primary-800/80">{clientGst.trim()}</p>
+                          </div>
+                        )}
                         {billingAddress.trim() && (
                           <div className="mb-6">
                             <p className="text-xs font-bold uppercase tracking-wider text-primary-600/80 mb-1">Billing Address</p>
@@ -830,6 +920,10 @@ export default function AdminDashboard() {
                           <div>
                             <p className="text-xs font-bold uppercase tracking-wider text-primary-600/80 mb-1">Due Date</p>
                             <p className="font-semibold text-primary-950">{dueDate ? new Date(dueDate).toLocaleDateString('en-IN', { dateStyle: 'medium' }) : '-'}</p>
+                          </div>
+                          <div className="col-span-2">
+                            <p className="text-xs font-bold uppercase tracking-wider text-primary-600/80 mb-1">Status</p>
+                            <p className="font-semibold text-primary-950 capitalize">{invoiceStatus === 'paid' ? 'Paid' : invoiceStatus === 'overdue' ? 'Overdue' : 'Unpaid'}</p>
                           </div>
                         </div>
 

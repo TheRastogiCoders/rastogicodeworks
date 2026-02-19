@@ -8,6 +8,7 @@ import API_BASE, {
   isLocalWithLocalApi,
   LOCAL_SERVER_UNREACHABLE_MESSAGE,
 } from '../config/api';
+import { setAuthToken } from '../config/auth';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -41,6 +42,7 @@ export default function Login() {
         setClientMessage(data.message || (res.status === 401 ? 'Invalid email or password.' : 'Unable to sign in.'));
         return;
       }
+      if (data.token) setAuthToken(data.token);
       if (data.user?.role === 'admin') {
         localStorage.setItem('isAdmin', 'true');
         navigate('/admin', { replace: true });

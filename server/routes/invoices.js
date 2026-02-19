@@ -38,7 +38,7 @@ function computeTotals(items, taxRate = 0.18) {
 // POST /api/invoices
 invoicesRouter.post('/', async (req, res) => {
   try {
-    const { clientName, clientEmail, billingAddress, gstNumber, invoiceDate, dueDate, items = [], notes } = req.body || {};
+    const { clientName, clientEmail, billingAddress, gstNumber, invoiceDate, dueDate, items = [], notes, status: bodyStatus } = req.body || {};
 
     if (!clientName || !invoiceDate) {
       return res.status(400).json({
@@ -55,6 +55,8 @@ invoicesRouter.post('/', async (req, res) => {
 
     const totals = computeTotals(cleanedItems);
 
+    const status = bodyStatus && ['unpaid', 'paid', 'overdue'].includes(bodyStatus) ? bodyStatus : 'unpaid';
+
     const invoice = await Invoice.create({
       clientName: clientName.trim(),
       clientEmail: clientEmail ? String(clientEmail).trim().toLowerCase() : undefined,
@@ -65,7 +67,7 @@ invoicesRouter.post('/', async (req, res) => {
       items: cleanedItems,
       notes,
       ...totals,
-      status: 'unpaid',
+      status,
     });
 
     res.status(201).json({ success: true, invoice });

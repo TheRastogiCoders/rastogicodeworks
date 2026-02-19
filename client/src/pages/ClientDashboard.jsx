@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import DashboardNavbar from '../components/DashboardNavbar';
 import API_BASE from '../config/api';
+import { getAuthHeaders, clearAuthToken } from '../config/auth';
 
 const navItems = [
   { id: 'overview', label: 'Overview', icon: LayoutDashboard },
@@ -57,9 +58,16 @@ export default function ClientDashboard() {
       }
       setError('');
       try {
-        const res = await fetch(`${API_BASE}/api/dashboard/client`, { credentials: 'include' });
+        const res = await fetch(`${API_BASE}/api/dashboard/client`, { headers: getAuthHeaders(), credentials: 'include' });
         const data = await res.json().catch(() => ({}));
         if (cancelled) return;
+        if (res.status === 401) {
+          clearAuthToken();
+          localStorage.removeItem('isClient');
+          localStorage.removeItem('clientName');
+          window.location.href = '/login';
+          return;
+        }
         if (!res.ok) {
           setError(data.message || 'Failed to load dashboard.');
           setLoading(false);
@@ -93,8 +101,9 @@ export default function ClientDashboard() {
 
   const handleLogout = () => {
     if (API_BASE) {
-      fetch(`${API_BASE}/api/auth/logout`, { method: 'POST', credentials: 'include' }).catch(() => {});
+      fetch(`${API_BASE}/api/auth/logout`, { method: 'POST', headers: getAuthHeaders(), credentials: 'include' }).catch(() => {});
     }
+    clearAuthToken();
     localStorage.removeItem('isClient');
     localStorage.removeItem('clientName');
     window.location.href = '/login';

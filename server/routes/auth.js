@@ -53,10 +53,11 @@ authRouter.post('/login', async (req, res) => {
       email: user.email,
       role: user.role,
     };
-    issueToken(res, payload);
+    const token = issueToken(res, payload);
 
     return res.json({
       success: true,
+      token,
       user: {
         id: user._id,
         email: user.email,

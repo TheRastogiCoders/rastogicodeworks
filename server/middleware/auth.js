@@ -21,6 +21,7 @@ export function issueToken(res, payload) {
     sameSite: isProduction ? 'none' : 'lax',
     maxAge: TOKEN_MAX_AGE_MS,
   });
+  return token;
 }
 
 export function clearToken(res) {
